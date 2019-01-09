@@ -21,5 +21,5 @@ The app will consist of a single page showing a map of Canada and a graph showin
 
 * Vanilla JavaScript for data sorting.
 * D3.js for visualizing the data.
-* D3.js for visualizing the data.
+
 
