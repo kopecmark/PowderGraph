@@ -51,5 +51,5 @@ PowGraph is a visualization application to show how much snow has fallen monthly
 ### CODE
 #### Data download
 ```
-  for year in `seq 1915 2019`;do for month in `seq 1 12`;do wget --content-disposition "http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=2409&Year=${year}&Month=${month}&Day=14&timeframe=2&submit= Download+Data" ;done;done
+  for year in `seq 2000 2005`;do for month in `seq 1 12`;do wget --content-disposition "http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=2409&Year=${year}&Month=${month}&Day=14&timeframe=3&submit= Download+Data" ;done;done
 ```
