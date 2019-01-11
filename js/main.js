@@ -18,9 +18,13 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
         return month.totalSnow
       })
       
-      var max = d3.max(data, (month) => {
-        return month.totalSnow
-      })
+    var g = svg.append("g")
+      .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+
+
+    var max = d3.max(data, (month) => {
+      return month.totalSnow
+    })
       
     var y = d3.scaleLinear()
       .domain([min, max])
@@ -37,12 +41,43 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
       .paddingInner(1)
       .paddingOuter(1)
 
+    var xAxisCall = d3.axisBottom(x);
+    
+    g.append("g")
+      .attr("class", "x-axis")
+      .attr("transform", "translate(0, " + height + ")")
+      .call(xAxisCall)
+      .selectAll("text")
+        .attr("y", "10")
+        .attr("x", "-5")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-40)");
+
+    g.append("text")
+      .attr("class", "x-axis-label")
+      .attr("x", width / 2)
+      .attr("y", height + 140)
+      .attr("font-size", "20px")
+      .attr("text-anchor", "middle")
+      .text("All the years")
+
+    var yAxisCall = d3.axisLeft(y)
+      .ticks(10)
+      .tickFormat((snowLevel) => {
+        return snowLevel + "cm"
+      });
+
+    g.append("g")
+      .attr("class", "y-axis")
+      .call(yAxisCall);
+
+
     // var x = d3.scaleTime()
     //   .domain([new Date(1915,1,1), 
     //     new Date(2007,11,1)])
     //   .range([0, 1500])
 
-    var rect = svg.selectAll("rect")
+    var rect = g.selectAll("rect")
       .data(data);
   
  
@@ -52,7 +87,9 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
         return x(m['Date/Time'])
       })
       .attr("y", 10)
-      .attr("width", 2)
+      .attr("width", (month) => {
+        
+      })
       .attr("height", (m) => {
         return y(m.totalSnow);
       })
