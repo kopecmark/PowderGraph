@@ -4,6 +4,8 @@ var margin = { left: 100, right: 10, top: 10, bottom: 100 }
 var width = 1500 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
 
+var flag = true;
+
 var g = d3.select("#chart-area")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -41,7 +43,7 @@ g.append("text")
   .text("Months");
 
 // Y Label Name
-g.append("text")
+var yLabel = g.append("text")
   // .attr("class", "y axis-label")
   .attr("x", - (height / 2))
   .attr("y", -60)
@@ -59,13 +61,14 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
     month.meanTemp = Number(month['Mean Temp (°C)']);
     month.meanMaxTemp = Number(month['Mean Max Temp (°C)']);
     month.meanMinTemp = Number(month['Mean Min Temp (°C)']);
-    month.totalRain = Number(month['Total Rain (mm)']);
+    month.totalRain = Math.round(Number(month['Total Rain (mm)'])/10);
   })
 
   console.log(data);
 
   d3.interval(function(){
     update(data)
+    flag = !flag
   }, 1000);
 
   // Run the vis for the first time
@@ -78,8 +81,10 @@ function update(data) {
   //   return month.totalSnow
   // })
 
+  var value = flag ? "totalSnow" : "totalRain";
+
   var max = d3.max(data, (month) => {
-    return month.totalSnow
+    return month[value]
   })
 
   x.domain(data.map((month) => {
@@ -118,9 +123,9 @@ function update(data) {
   // UPDATE old elements present in new data
   rect
     .attr("x", (m) => {return x(m['Date/Time'])})
-    .attr("y", (m) => { return y(m.totalSnow) })
+    .attr("y", (m) => { return y(m[value]) })
     .attr("width", 2)
-    .attr("height", (m) => {return height - y(m.totalSnow); })
+    .attr("height", (m) => {return height - y(m[value]); })
 
   // console.log('min y axis val ' + min)
   // console.log('max y axis val ' + max)
@@ -128,9 +133,12 @@ function update(data) {
   rect.enter()
     .append("rect")
       .attr("x", (m) => {return x(m['Date/Time'])})
-      .attr("y", (m) => { return y(m.totalSnow) })
+      .attr("y", (m) => { return y(m[value]) })
       .attr("width", 2)
-      .attr("height", (m) => {return height - y(m.totalSnow); })
+      .attr("height", (m) => {return height - y(m[value]); })
       .attr("fill", "green");
-
+  
+  var label = flag ? "Snow" : "Rain"
+  
+  yLabel.text(label);
 }
