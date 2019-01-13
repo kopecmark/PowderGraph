@@ -6,6 +6,8 @@ var height = 500 - margin.top - margin.bottom;
 
 var flag = true;
 
+var t = d3.transition().duration(750);
+
 var g = d3.select("#chart-area")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -26,8 +28,7 @@ var yAxisGroup = g.append("g")
 // Scale the axises
 var x = d3.scaleBand()
   .range([0, width])
-  .paddingInner(1)
-  .paddingOuter(1)
+  .padding(0.2)
 
 var y = d3.scaleLinear()
   .range([height, 0])
@@ -104,27 +105,31 @@ function update(data) {
       return snowLevel + "cm"
     });
 
-  xAxisGroup.call(xAxisCall)
+  xAxisGroup.transition(t).call(xAxisCall)
     .selectAll("text")
     .attr("y", "10")
     .attr("x", "-5")
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-40)");
 
-  yAxisGroup.call(yAxisCall);
+  yAxisGroup.transition(y).call(yAxisCall);
 
   // JOIN new data with old elements
   var rect = g.selectAll("rect")
     .data(data);
 
   // EXIT old elements not present in new data
-  rect.exit().remove();
+  rect.exit().remove()
+    .attr("fill", "red")
+  .transition(t)
+    .attr("y", y(0))
+    .remove();
 
   // UPDATE old elements present in new data
-  rect
+  rect.transition(t)
     .attr("x", (m) => {return x(m['Date/Time'])})
     .attr("y", (m) => { return y(m[value]) })
-    .attr("width", 2)
+    .attr("width", x.bandwidth)
     .attr("height", (m) => {return height - y(m[value]); })
 
   // console.log('min y axis val ' + min)
@@ -133,10 +138,15 @@ function update(data) {
   rect.enter()
     .append("rect")
       .attr("x", (m) => {return x(m['Date/Time'])})
+      .attr("width", x.bandwidth)
+      .attr("fill", "green")
+      .attr("y", y(0))
+      .attr("height", 0)
+    // AND UPDATE old elements present in new data
+    // .merge(rect)
+    .transition(t)
       .attr("y", (m) => { return y(m[value]) })
-      .attr("width", 2)
-      .attr("height", (m) => {return height - y(m[value]); })
-      .attr("fill", "green");
+      .attr("height", (m) => { return height - y(m[value]); })
   
   var label = flag ? "Snow" : "Rain"
   
