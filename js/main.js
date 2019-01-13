@@ -56,6 +56,10 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
     month.totalSnow = Number(month['Total Snow (cm)']);
     month.Month = +month.Month;
     month.Year = +month.Year;
+    month.meanTemp = Number(month['Mean Temp (°C)']);
+    month.meanMaxTemp = Number(month['Mean Max Temp (°C)']);
+    month.meanMinTemp = Number(month['Mean Min Temp (°C)']);
+    month.totalRain = Number(month['Total Rain (mm)']);
   })
 
   console.log(data);
