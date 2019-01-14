@@ -63,6 +63,9 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
     month.meanMaxTemp = Number(month['Mean Max Temp (°C)']);
     month.meanMinTemp = Number(month['Mean Min Temp (°C)']);
     month.totalRain = Math.round(Number(month['Total Rain (mm)'])/10);
+    var parseTime = d3.timeParse("%Y-%m");
+    var formatTime = d3.timeFormat("%Y-%m");
+    month['Date/Time'] = formatTime(parseTime(month['Date/Time']));
   })
 
   console.log(data);
@@ -143,7 +146,7 @@ function update(data) {
       .attr("y", y(0))
       .attr("height", 0)
     // AND UPDATE old elements present in new data
-    // .merge(rect)
+    .merge(rect)
     .transition(t)
       .attr("y", (m) => { return y(m[value]) })
       .attr("height", (m) => { return height - y(m[value]); })
