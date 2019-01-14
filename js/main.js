@@ -23,6 +23,13 @@ var xAxisGroup = g.append("g")
 var yAxisGroup = g.append("g")
   .attr("class", "y-axis")
  
+// Tooltip
+var tip = d3.tip().attr('class', 'd3-tip')
+  .html(function (d) {
+    return d;
+  });
+g.call(tip);
+
 
 
 // Scale the axises
@@ -145,6 +152,8 @@ function update(data) {
       .attr("fill", "green")
       .attr("y", y(0))
       .attr("height", 0)
+      .on("mouseover", tip.show)
+      .on("mouseout", tip.hide)
     // AND UPDATE old elements present in new data
     .merge(rect)
     .transition(t)
