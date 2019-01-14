@@ -26,7 +26,11 @@ var yAxisGroup = g.append("g")
 // Tooltip
 var tip = d3.tip().attr('class', 'd3-tip')
   .html(function (d) {
-    return d;
+    text = "<strong>Year:</strong> <span style='color:red'>" + d.Year + "</span><br>";
+    text += "<strong>Month:</strong> <span style='color:red'>" + d.Month + "</span><br>";
+    text += "<strong>Snow:</strong> <span style='color:red'>" + d3.format(".1f")(d.totalSnow) + "</span><br>";
+    text += "<strong>Rain:</strong> <span style='color:red'>" + d3.format(".1f")(d.totalRain) + "</span><br>";
+    return text;
   });
 g.call(tip);
 
