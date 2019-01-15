@@ -85,7 +85,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
 
   console.log(formattedData);
   selectedData = formattedData.filter((d) => {
-    return d.Year === 1920
+    return d.Year === 1919
   })
 
   update(selectedData);
@@ -105,7 +105,11 @@ button.onclick = () => {
   }
   flag = !flag
   console.log(formattedData)
-  update(formattedData);
+
+  selectedData = formattedData.filter((d) => {
+    return d.Year === year
+  })
+  update(selectedData);
 }
 
 $("#date-slider").slider({
@@ -214,6 +218,7 @@ function update(data) {
   var label = flag ? "Snow" : "Rain"
   
   yLabel.text(label);
+
 
   $("#date-slider").slider("value", +(year))
 }
