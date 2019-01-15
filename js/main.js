@@ -5,6 +5,7 @@ var width = 1500 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
 
 var flag = true;
+var formattedData;
 
 var t = d3.transition().duration(750);
 
@@ -33,7 +34,6 @@ var tip = d3.tip().attr('class', 'd3-tip')
     return text;
   });
 g.call(tip);
-
 
 
 // Scale the axises
@@ -66,29 +66,49 @@ var yLabel = g.append("text")
 
   
 d3.csv("data/ll_monthly_snow.csv").then(function(data){
-  data.forEach( (month) =>{
-    month.totalSnow = Number(month['Total Snow (cm)']);
-    month.Month = +month.Month;
-    month.Year = +month.Year;
-    month.meanTemp = Number(month['Mean Temp (°C)']);
-    month.meanMaxTemp = Number(month['Mean Max Temp (°C)']);
-    month.meanMinTemp = Number(month['Mean Min Temp (°C)']);
-    month.totalRain = Math.round(Number(month['Total Rain (mm)'])/10);
+  
+   formattedData = data.map( (month) => {
+    const newMonth = {}
+    newMonth.totalSnow = Number(month['Total Snow (cm)']);
+    newMonth.Month = +month.Month;
+    newMonth.Year = +month.Year;
+    newMonth.meanTemp = Number(month['Mean Temp (°C)']);
+    newMonth.meanMaxTemp = Number(month['Mean Max Temp (°C)']);
+    newMonth.meanMinTemp = Number(month['Mean Min Temp (°C)']);
+    newMonth.totalRain = Math.round(Number(month['Total Rain (mm)'])/10);
     var parseTime = d3.timeParse("%Y-%m");
     var formatTime = d3.timeFormat("%Y-%m");
-    month['Date/Time'] = formatTime(parseTime(month['Date/Time']));
+    newMonth['Date/Time'] = formatTime(parseTime(month['Date/Time']));
+    return newMonth;
   })
 
-  console.log(data);
-
-  d3.interval(function(){
-    update(data)
-    flag = !flag
-  }, 1000);
+  console.log(formattedData);
+  // console.log(formattedData);
+  
+  // d3.interval(function(){
+  //   update(data)
+  //   flag = !flag
+  // }, 1000);
 
   // Run the vis for the first time
-  update(data);
+  update(formattedData);
 })
+
+
+let button = document.getElementById("precip-button")
+  
+button.onclick = () => {
+  console.log(button.innerHTML)
+  if (button.innerHTML == "Snow") {
+      button.innerHTML = "Rain";
+  }
+  else {
+    button.innerHTML = "Snow";
+  }
+  flag = !flag
+  console.log(formattedData)
+  update(formattedData);
+}
 
 function update(data) {
   // Update the domain of each axis
@@ -135,9 +155,9 @@ function update(data) {
   // EXIT old elements not present in new data
   rect.exit().remove()
     .attr("fill", "red")
-  .transition(t)
-    .attr("y", y(0))
-    .remove();
+    .transition(t)
+      .attr("y", y(0))
+      .remove();
 
   // UPDATE old elements present in new data
   rect.transition(t)
