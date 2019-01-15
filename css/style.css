@@ -75,27 +75,15 @@
 	top:1px;
 }
 
-.main-container{
-  width: 90vw;
-  display: grid;
-  grid-template-columns: 15vw auto 10vw;
-  grid-template-rows: 20vh 50vh;
-
-}
-
-.title-container{
+.container{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70vw;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  align-self: center;
-  grid-column: 1 / span 1;
-  font-size: 80px;
-  text-align: center;
-  font-family: Arial;
-}
-.title{
-  grid-column: 1 / span 1;
 }
 
-.pano{
-  width: 100%;
+.left-nav{
+  
 }

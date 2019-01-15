@@ -1,0 +1,36 @@
+
+.title-container{
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  font-size: 80px;
+  font-family: Arial;
+}
+
+.main-container{
+  display: flex;
+  height: 60vh;
+  align-items: center;
+}
+.title{
+
+}
+
+.controllers{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  /* align-items: center; */
+}
+
+.pano{
+  grid-column: 1 / span 3;
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+  /* border-radius: 8px; */
+}
+
+.description{
+  font-family: Arial;
+}
