@@ -58,6 +58,7 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2f6627;
 }
+
 #precip-button:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cbf2a), color-stop(1, #44c767));
 	background:-moz-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
@@ -68,7 +69,28 @@
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cbf2a', endColorstr='#44c767',GradientType=0);
 	background-color:#5cbf2a;
 }
+
 #precip-button:active {
 	position:relative;
 	top:1px;
+}
+
+.main-container{
+  width: 90vw;
+  display: grid;
+  grid-template-columns: 15vw auto 10vw;
+  grid-template-rows: 20vh 50vh;
+
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  grid-column: 1 / span 3;
+  font-size: 80px;
+}
+
+.pano{
+  height: 10vh;
+  grid-column: 1 / span 3;
 }

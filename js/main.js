@@ -1,7 +1,7 @@
 // Table Setup
 var margin = { left: 100, right: 10, top: 10, bottom: 100 }
 
-var width = 1500 - margin.left - margin.right;
+var width = 1000 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
 
 var flag = true;

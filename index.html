@@ -4,17 +4,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="">
-  <title>Lots of snow</title>
+  <title>PowGraph</title>
   <!-- Custom styling -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/d3-tip.css">
-  <link rel="stylesheet" href="css/jquery-ui.min.css">
 </head>
 
 <body>
-  <div className=main-container>
-    <div className="controllers">
-      <div className="button-container">
+  <div class="main-container">
+    <div class="title">
+      <img src="favicon.ico" alt="">
+      PowGraph
+    </div>
+    <div class="controllers">
+      <div class="button-container">
         <button id="precip-button">Snow</button>
       </div>
 
@@ -24,26 +27,28 @@
       </div>
     </div>
   
-  <div class="container-bars">
-    <div class="row">
-      <div id="chart-area"></div>
+    <div class="container-bars">
+      <div class="row">
+        <div id="chart-area"></div>
+      </div>
     </div>
+    <div class="description">This describes the function of the App</div>
   </div>
-  </div>
-</div>
+
   <!-- External JS libraries -->
   <script src="js/d3.min.js"></script>
   <script src="js/d3-tip.js"></script>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
   <script src="https://d3js.org/d3-time.v1.min.js"></script>
   <script src="https://d3js.org/d3-axis.v1.min.js"></script>
-
 
   <!-- Custom JS -->
   <script src="js/main.js"></script>
 
 
 </body>
+
+<footer>
+  
+</footer>
 
 </html>
