@@ -12,22 +12,25 @@
 </head>
 
 <body>
+  <div className=main-container>
+    <div className="controllers">
+      <div className="button-container">
+        <button id="precip-button">Snow</button>
+      </div>
 
- <div className="button-container">
-   <button id="precip-button">Snow</button>
- </div>
-
-  <div id="slider-div">
-    <label>Year: <span id="year">1918</span></label>
-    <div id="date-slider"></div>
-  </div>
+      <div class="slide-container">
+        <input type="range" min="1919" max="2007" value="1" class="slider" id="myRange">
+        <span id="demo">1919</span>
+      </div>
+    </div>
+  
   <div class="container-bars">
     <div class="row">
       <div id="chart-area"></div>
     </div>
   </div>
   </div>
-
+</div>
   <!-- External JS libraries -->
   <script src="js/d3.min.js"></script>
   <script src="js/d3-tip.js"></script>

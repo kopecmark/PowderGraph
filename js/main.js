@@ -6,7 +6,7 @@ var height = 500 - margin.top - margin.bottom;
 
 var flag = true;
 var formattedData;
-var year = 1918;
+var year = 1919;
 
 var t = d3.transition().duration(750);
 
@@ -112,25 +112,44 @@ button.onclick = () => {
   update(selectedData);
 }
 
-$("#date-slider").slider({
-  max: 2007,
-  min: 1918,
-  step: 1,
-  slide: function (event, ui) {
-    year = ui.value;
+// Slider
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
 
-  console.log(year)
-  console.log(formattedData)
-
-  
-  selectedData = formattedData.filter((d) => {
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function () {
+  output.innerHTML = this.value;
+  year = Number(this.value);
+  let selectedData = formattedData.filter((d) => {
+    // console.log(d)
+    // console.log(typeof year)
+    // console.log(d.Year === year)
     return d.Year === year
   })
-
+  console.log(formattedData)
+  console.log(year)
+  console.log(selectedData)
   update(selectedData);
+}
+
+// $("#date-slider").slider({
+//   max: 2007,
+//   min: 1918,
+//   step: 1,
+//   slide: function (event, ui) {
+//     year = ui.value;
+
+  
+//   let selectedData = formattedData.filter((d) => {
+//     return d.Year === year
+//   })
+//   console.log(formattedData)
+  
+//   update(selectedData);
  
-  }
-})
+//   }
+// })
 
 function update(data) {
   // Update the domain of each axis
@@ -220,5 +239,5 @@ function update(data) {
   yLabel.text(label);
 
 
-  $("#date-slider").slider("value", +(year))
+  // $("#date-slider").slider("value", +(year))
 }
