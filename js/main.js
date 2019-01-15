@@ -6,6 +6,7 @@ var height = 500 - margin.top - margin.bottom;
 
 var flag = true;
 var formattedData;
+var year = 1918;
 
 var t = d3.transition().duration(750);
 
@@ -83,8 +84,11 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
   })
 
   console.log(formattedData);
+  selectedData = formattedData.filter((d) => {
+    return d.Year === 1920
+  })
 
-  update(formattedData);
+  update(selectedData);
 })
 
 // Function to switch between snow and rain
@@ -104,12 +108,37 @@ button.onclick = () => {
   update(formattedData);
 }
 
+$("#date-slider").slider({
+  max: 2007,
+  min: 1918,
+  step: 1,
+  slide: function (event, ui) {
+    year = ui.value;
+
+  console.log(year)
+  console.log(formattedData)
+
+  
+  selectedData = formattedData.filter((d) => {
+    return d.Year === year
+  })
+
+  update(selectedData);
+ 
+  }
+})
 
 function update(data) {
   // Update the domain of each axis
   // var min = d3.min(data, (month) => {
   //   return month.totalSnow
   // })
+  // let year = 1920
+
+  // data = data.filter((d) => {
+  //   return d.Year === year
+  // })
+  // console.log(data)
 
   var value = flag ? "totalSnow" : "totalRain";
 
@@ -185,4 +214,6 @@ function update(data) {
   var label = flag ? "Snow" : "Rain"
   
   yLabel.text(label);
+
+  $("#date-slider").slider("value", +(year))
 }

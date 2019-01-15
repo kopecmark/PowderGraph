@@ -1,5 +1,4 @@
 ﻿"Date/Time","Year","Month","Mean Max Temp (°C)","Mean Max Temp Flag","Mean Min Temp (°C)","Mean Min Temp Flag","Mean Temp (°C)","Mean Temp Flag","Extr Max Temp (°C)","Extr Max Temp Flag","Extr Min Temp (°C)","Extr Min Temp Flag","Total Rain (mm)","Total Rain Flag","Total Snow (cm)","Total Snow Flag","Total Precip (mm)","Total Precip Flag","Snow Grnd Last Day (cm)","Snow Grnd Last Day Flag","Dir of Max Gust (10's deg)","Dir of Max Gust Flag","Spd of Max Gust (km/h)","Spd of Max Gust Flag"
-"1918-12","1918","12","-5.6","","-18.4","","-12.0","","4.4","","-33.3","","0.0","","116.8","","116.8","","","",,"",,""
 "1919-01","1919","01","-3.7","","-19.4","","-11.6","","4.4","","-29.4","","0.0","","106.7","","106.7","","","",,"",,""
 "1919-02","1919","02","-7.6","","-23.4","","-15.5","","4.4","S","-38.9","","0.0","","50.8","","50.8","","","",,"",,""
 "1919-03","1919","03","-2.6","","-16.2","","-9.4","","","M","","M","","M","","M","","M","","",,"",,""
