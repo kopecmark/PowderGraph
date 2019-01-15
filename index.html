@@ -15,20 +15,30 @@
  <div className="button-container">
    <button id="precip-button">Snow</button>
  </div>
-  <div class="container">
+
+ <div id="slider-container">
+  <label>Year: <span id="year">1800</span></label>
+  <div id="date-slider"></div>
+ </div>
+  <div class="container-bars">
     <div class="row">
       <div id="chart-area"></div>
     </div>
   </div>
+  </div>
 
   <!-- External JS libraries -->
   <script src="js/d3.min.js"></script>
-  <script src="js/d3.min.js"></script>
   <script src="js/d3-tip.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="https://d3js.org/d3-time.v1.min.js"></script>
+  <script src="https://d3js.org/d3-axis.v1.min.js"></script>
 
 
   <!-- Custom JS -->
   <script src="js/main.js"></script>
+
 
 </body>
 

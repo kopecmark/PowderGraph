@@ -83,17 +83,11 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
   })
 
   console.log(formattedData);
-  // console.log(formattedData);
-  
-  // d3.interval(function(){
-  //   update(data)
-  //   flag = !flag
-  // }, 1000);
 
-  // Run the vis for the first time
   update(formattedData);
 })
 
+// Function to switch between snow and rain
 
 let button = document.getElementById("precip-button")
   
@@ -109,6 +103,7 @@ button.onclick = () => {
   console.log(formattedData)
   update(formattedData);
 }
+
 
 function update(data) {
   // Update the domain of each axis
@@ -126,10 +121,13 @@ function update(data) {
     return month['Date/Time']
   }))
 
+
   y.domain([0, max])
 
   // X axis
-  var xAxisCall = d3.axisBottom(x);
+  var xAxisCall = d3.axisBottom(x)
+    .ticks(5);
+
 
   
   // Y axis
