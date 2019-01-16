@@ -37,5 +37,5 @@ A user can click the button to toggle between snow and rain fall totals.
 ```
 
 ### Possible Future Implementations
-* The ability to search all weather stations in Canada and have the website automatically fetch the data so that it can be displayed within the graph.
+* The ability to search all weather stations in Canada and have the application automatically fetch the data so that it can be displayed within the graph.
 * Adjust graph bar colors to change shading based on total snowfall for given month compared to average totals for the specified month for all years data has been recorded.
