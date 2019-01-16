@@ -1,5 +1,7 @@
 # PowGraph
 
+[Live Link](https://kopecmark.github.io/PowGraph/)
+
 ## Overview
 
 PowGraph is a visualization application to show how much snow has fallen monthly throughout the years in Lake Louise - Alberta, Canada.
@@ -8,9 +10,6 @@ PowGraph is a visualization application to show how much snow has fallen monthly
 
 * The app consists of a single page
 * A user can select a year to view the total amount of snowfall and toggle to rain totals as well.
-
-
-
 
 ### Technologies employed
 
