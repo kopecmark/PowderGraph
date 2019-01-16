@@ -24,7 +24,7 @@ PowGraph is a visualization application to show how much snow has fallen monthly
 * The data was parsed and statically available on the website
 
 ### Features
-A user can select a year using the slider to view monthly snow fall totals.
+A user can select a year using the slider to view monthly snow fall totals and hover over each bar to view exact values.
 ![Wireframe](./slider.gif)
 
 A user can click the button to toggle between snow and rain fall totals.
