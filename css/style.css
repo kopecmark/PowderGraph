@@ -49,6 +49,7 @@
 	text-decoration:none;
   text-shadow:0px 1px 0px #1c7192;
   min-width: 150px;
+  outline: none;
 }
 #precip-button:hover {
 	background-color:#3586a3;
@@ -57,6 +58,8 @@
 	position:relative;
 	top:1px;
 }
+
+
 
 
 body { 
