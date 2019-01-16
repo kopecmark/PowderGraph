@@ -108,7 +108,7 @@ header, footer, article, nav, div {
   background: #54A1BF;
   display: flex;
   flex-direction: column;
-  /* justify-self: center; */
+  align-items: center;
   }
 .site-description { 
   grid-area: desc; 
