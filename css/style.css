@@ -93,6 +93,7 @@ header, footer, article, nav, div {
   grid-area: footer;
   align-self: center;
   justify-self: center;
+  text-decoration: none;
   }
 
 .pageFooter img{
