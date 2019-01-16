@@ -118,7 +118,7 @@ var output = document.getElementById("demo");
 output.innerHTML = slider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
-slider.oninput = function () {
+slider.onchange = function () {
   output.innerHTML = this.value;
   year = Number(this.value);
   let selectedData = formattedData.filter((d) => {
@@ -127,9 +127,9 @@ slider.oninput = function () {
     // console.log(d.Year === year)
     return d.Year === year
   })
-  console.log(formattedData)
-  console.log(year)
-  console.log(selectedData)
+  // console.log(formattedData)
+  // console.log(year)
+  // console.log(selectedData)
   update(selectedData);
 }
 
@@ -223,7 +223,7 @@ function update(data) {
     .append("rect")
       .attr("x", (m) => {return x(m['Date/Time'])})
       .attr("width", x.bandwidth)
-      .attr("fill", "green")
+    .attr("fill", d3.rgb("#1C7192"))
       .attr("y", y(0))
       .attr("height", 0)
       .on("mouseover", tip.show)
