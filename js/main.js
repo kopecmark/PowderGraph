@@ -78,7 +78,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
     newMonth.meanMinTemp = Number(month['Mean Min Temp (°C)']);
     newMonth.totalRain = Math.round(Number(month['Total Rain (mm)'])/10);
     var parseTime = d3.timeParse("%Y-%m");
-    var formatTime = d3.timeFormat("%Y-%m");
+    var formatTime = d3.timeFormat("%b-%Y");
     newMonth['Date/Time'] = formatTime(parseTime(month['Date/Time']));
     return newMonth;
   })
