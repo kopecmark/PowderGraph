@@ -106,7 +106,8 @@ header, footer, article, nav, div {
 }
 
 .mainArticle { 
-  grid-area: article;      
+  grid-area: article; 
+  width: 100%;     
   }
 .mainNav { 
   grid-area: nav; 
