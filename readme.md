@@ -1,6 +1,6 @@
 # PowGraph
 
-[Live Link](https://kopecmark.github.io/PowGraph/)
+[Live Link](https://kopecmark.github.io/PowderGraph/)
 
 ## Overview
 
