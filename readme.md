@@ -1,10 +1,10 @@
-# PowGraph
+# PowderGraph
 
 [Live Link](https://kopecmark.github.io/PowderGraph/)
 
 ## Overview
 
-PowGraph is a visualization application to show how much snow has fallen monthly throughout the years in Lake Louise - Alberta, Canada.
+PowderGraph is a visualization application to show how much snow has fallen monthly throughout the years in Lake Louise - Alberta, Canada.
 
 ### Functionality
 
