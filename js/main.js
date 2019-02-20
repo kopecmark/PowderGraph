@@ -90,9 +90,9 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
 
   // console.log(formattedData);
   selectedData = formattedData.filter((d) => {
-    return d.Year === 1919
+    return d.Year === 1919;
   })
-
+``
   update(selectedData);
 })
 
@@ -142,35 +142,8 @@ slider.onchange = function () {
   update(selectedData);
 }
 
-// $("#date-slider").slider({
-//   max: 2007,
-//   min: 1918,
-//   step: 1,
-//   slide: function (event, ui) {
-//     year = ui.value;
-
-  
-//   let selectedData = formattedData.filter((d) => {
-//     return d.Year === year
-//   })
-//   console.log(formattedData)
-  
-//   update(selectedData);
- 
-//   }
-// })
 
 function update(data) {
-  // Update the domain of each axis
-  // var min = d3.min(data, (month) => {
-  //   return month.totalSnow
-  // })
-  // let year = 1920
-
-  // data = data.filter((d) => {
-  //   return d.Year === year
-  // })
-  // console.log(data)
 
   var value = flag ? "totalSnow" : "totalRain";
 
@@ -189,8 +162,6 @@ function update(data) {
   var xAxisCall = d3.axisBottom(x)
     .ticks(5);
 
-
-  
   // Y axis
   var yAxisCall = d3.axisLeft(y)
     .ticks(10)
@@ -225,8 +196,6 @@ function update(data) {
     .attr("width", x.bandwidth)
     .attr("height", (m) => {return height - y(m[value]); })
 
-  // console.log('min y axis val ' + min)
-  // console.log('max y axis val ' + max)
 
   rect.enter()
     .append("rect")
@@ -247,6 +216,4 @@ function update(data) {
   
   yLabel.text(label);
 
-
-  // $("#date-slider").slider("value", +(year))
 }

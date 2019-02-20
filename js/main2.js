@@ -1,3 +1,32 @@
+var formattedData;
+var formattedDataYearly;
+
+d3.csv("data/ll_monthly_snow.csv").then(function (data) {
+
+  formattedData = data.map((month) => {
+    const newMonth = {};
+    newMonth.totalSnow = Number(month['Total Snow (cm)']);
+    newMonth.Month = +month.Month;
+    newMonth.Year = +month.Year;
+    newMonth.meanTemp = Number(month['Mean Temp (°C)']);
+    newMonth.meanMaxTemp = Number(month['Mean Max Temp (°C)']);
+    newMonth.meanMinTemp = Number(month['Mean Min Temp (°C)']);
+    newMonth.totalRain = Math.round(Number(month['Total Rain (mm)']) / 10);
+    var parseTime = d3.timeParse("%Y-%m");
+    var formatTime = d3.timeFormat("%b-%Y");
+    newMonth['Date/Time'] = formatTime(parseTime(month['Date/Time']));
+    return newMonth;
+  });
+  
+  formattedData.forEach(){};
+
+  console.log(formattedData);
+  console.log(formattedDataYearly);
+
+});
+
+
+
 var data = [
   {
     name: "USA",
@@ -54,8 +83,8 @@ var duration = 250;
 var lineOpacity = "0.25";
 var lineOpacityHover = "0.85";
 var otherLinesOpacityHover = "0.1";
-var lineStroke = "1.5px";
-var lineStrokeHover = "2.5px";
+var lineStroke = "3.5px";
+var lineStrokeHover = "4.5px";
 
 var circleOpacity = '0.85';
 var circleOpacityOnLineHover = "0.25";
@@ -72,6 +101,8 @@ data.forEach(function (d) {
   });
 });
 
+console.log(data);
+console.log(formattedData);
 
 /* Scale */
 var xScale = d3.scaleTime()
