@@ -147,15 +147,15 @@ function update(data) {
   var value = flag ? "totalSnow" : "totalRain";
 
   var max = d3.max(data, (month) => {
-    return month[value]
+    return month[value];
   })
 
   x.domain(data.map((month) => {
-    return month['Date/Time']
+    return month['Date/Time'];
   }))
 
 
-  y.domain([0, max])
+  y.domain([0, max]);
 
   // X axis
   var xAxisCall = d3.axisBottom(x)

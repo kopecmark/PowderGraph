@@ -2,6 +2,7 @@ var formattedData;
 var formattedDataYearly=[];
 var allYears = [];
 var data = []; 
+var flag = true;
 
 d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   formattedData = data.map((month) => {
@@ -21,21 +22,28 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     return newMonth;
   });
 
+  // format data for use in a line graph
+  var maxSnow = 0;
+  var maxRain = 0;
+
   allYears.forEach(year => {
-    // console.log(formattedDataYearly);
     var singleYear = {year: year, values: []};
-    // console.log(singleYear);
+
     var allMonths = formattedData.filter(month => {
       return month.Year === year;
     });
 
     allMonths.forEach(month => {
-      singleYear.values.push({month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain})
+      singleYear.values.push({month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain});
+      if (month.totalSnow > maxSnow) maxSnow = month.totalSnow;
+      if (month.totalRain > maxRain) maxRain = month.totalRain;
+      
     });
     
     formattedDataYearly.push(singleYear);
   });
-  update(formattedDataYearly);
+
+  update(formattedDataYearly, maxSnow, maxRain);
 
 });
 
@@ -55,15 +63,17 @@ var circleOpacityOnLineHover = "0.25";
 var circleRadius = 3;
 var circleRadiusHover = 6;
 
-function update(data){
-  console.log(data)
+function update(data, maxSnow, maxRain){
+  var value = flag ? "totalSnow" : "totalRain";
+  var yScaleValue = flag ? maxSnow : maxRain;
+  console.log(value)
   /* Scale */
   var xScale = d3.scaleTime()
     .domain(d3.extent(data[0].values, d => d.month))
     .range([0, width - margin]);
 
   var yScale = d3.scaleLinear()
-    .domain([0, d3.max(data[0].values, d => d.totalSnow)])
+    .domain([0, yScaleValue])
     .range([height - margin, 0]);
 
   var color = d3.scaleOrdinal(d3.schemeCategory10);
