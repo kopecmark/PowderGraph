@@ -64,9 +64,10 @@ var circleRadius = 3;
 var circleRadiusHover = 6;
 
 function update(data, maxSnow, maxRain){
-  var value = flag ? "totalSnow" : "totalRain";
+  var toggle = flag ? "totalSnow" : "totalRain";
   var yScaleValue = flag ? maxSnow : maxRain;
-  console.log(value)
+  console.log(toggle)
+  
   /* Scale */
   var xScale = d3.scaleTime()
     .domain(d3.extent(data[0].values, d => d.month))
@@ -89,7 +90,7 @@ function update(data, maxSnow, maxRain){
   /* Add line into SVG */
   var line = d3.line()
     .x(d => xScale(d.month))
-    .y(d => yScale(d.totalSnow));
+    .y(d => yScale(d[toggle]));
 
   let lines = svg.append('g')
     .attr('class', 'lines');
@@ -150,9 +151,9 @@ function update(data, maxSnow, maxRain){
         .style("cursor", "pointer")
         .append("text")
         .attr("class", "text")
-        .text(`${d.totalSnow}`)
+        .text(`${d[toggle]}`)
         .attr("x", d => xScale(d.month) + 5)
-        .attr("y", d => yScale(d.totalSnow) - 10);
+        .attr("y", d => yScale(d[toggle]) - 10);
     })
     .on("mouseout", function (d) {
       d3.select(this)
@@ -163,7 +164,7 @@ function update(data, maxSnow, maxRain){
     })
     .append("circle")
     .attr("cx", d => xScale(d.month))
-    .attr("cy", d => yScale(d.totalSnow))
+    .attr("cy", d => yScale(d[toggle]))
     .attr("r", circleRadius)
     .style('opacity', circleOpacity)
     .on("mouseover", function (d) {
