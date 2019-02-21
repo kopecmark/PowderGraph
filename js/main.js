@@ -92,7 +92,6 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
   selectedData = formattedData.filter((d) => {
     return d.Year === 1919;
   })
-``
   update(selectedData);
 })
 
