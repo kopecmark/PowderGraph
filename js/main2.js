@@ -145,7 +145,7 @@ function update(data){
     .attr("transform", "rotate(-90)")
     .attr("fill", "#000")
     .text("Total values");
-    
+
   var color = d3.scaleOrdinal(d3.schemeCategory10);
 
   
@@ -156,13 +156,22 @@ function update(data){
     .x(d => xScale(d.month))
     .y(d => yScale(d[toggle]));
 
-  let lines = svg.append('g')
-    .attr('class', 'lines');
+  // let lines = svg.append('g')
+  //   .attr('class', 'lines');
 
-  lines.selectAll('.line-group')
-    .data(data).enter()
-    .append('g')
-    .attr('class', 'line-group')
+  let lines = svg.selectAll('.line-group')
+    .data(data);
+    
+
+    lines.enter()
+      .append('g')
+        .attr('class', 'line-group')
+      .append('path')
+        .attr('class', 'line')
+        .attr('d', d => line(d.values))
+        .style('stroke', (d, i) => color(i))
+        .style('opacity', lineOpacity)
+
     .on("mouseover", function (d, i) {
       svg.append("text")
         .attr("class", "title-text")
@@ -175,11 +184,7 @@ function update(data){
     .on("mouseout", function (d) {
       svg.select(".title-text").remove();
     })
-    .append('path')
-    .attr('class', 'line')
-    .attr('d', d => line(d.values))
-    .style('stroke', (d, i) => color(i))
-    .style('opacity', lineOpacity)
+   
     .on("mouseover", function (d) {
       d3.selectAll('.line')
         .style('opacity', otherLinesOpacityHover);
@@ -244,6 +249,6 @@ function update(data){
         .attr("r", circleRadius);
     });
 
-
+    console.log(lines);
   
 }
