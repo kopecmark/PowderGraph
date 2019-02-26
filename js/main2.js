@@ -24,6 +24,13 @@ var circleOpacityOnLineHover = "0.25";
 var circleRadius = 3;
 var circleRadiusHover = 6;
 
+/* Add SVG */
+  var svg = d3.select("#chart").append("svg")
+    .attr("width", (width + margin) + "px")
+    .attr("height", (height + margin) + "px")
+    .append('g')
+    .attr("transform", `translate(${margin}, ${margin})`);
+
 // Data extraction from csv file
 d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   formattedData = data.map((month) => {
@@ -44,7 +51,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     return newMonth;
   });
 
-    console.log(formattedData)
+
   // format data for use in a line graph
   allYears.forEach(year => {
     var singleYear = {year: year, values: []};
@@ -62,6 +69,10 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     
     formattedDataYearly.push(singleYear);
   });
+
+  // d3.interval(() => {
+  //   update(formattedDataYearly);
+  // }, 5000);
 
   update(formattedDataYearly);
 
@@ -105,12 +116,7 @@ function update(data){
 
   var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  /* Add SVG */
-  var svg = d3.select("#chart").append("svg")
-    .attr("width", (width + margin) + "px")
-    .attr("height", (height + margin) + "px")
-    .append('g')
-    .attr("transform", `translate(${margin}, ${margin})`);
+  
 
 
   /* Add line into SVG */
