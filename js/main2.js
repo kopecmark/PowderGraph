@@ -31,6 +31,26 @@ var circleRadiusHover = 6;
     .append('g')
     .attr("transform", `translate(${margin}, ${margin})`);
 
+/* Scale Axis */
+var xScale = d3.scaleTime()
+  .range([0, width - margin]);
+
+var yScale = d3.scaleLinear()
+  .range([height - margin, 0]);
+
+/* Add Axis into SVG */
+
+
+var xAxisGroup = svg.append("g")
+  .attr("class", "x axis")
+  .attr("transform", `translate(0, ${height - margin})`)
+ 
+
+var yAxisGroup = svg.append("g")
+  .attr("class", "y axis")
+ 
+
+
 // Data extraction from csv file
 d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   formattedData = data.map((month) => {
@@ -101,19 +121,31 @@ button.onclick = () => {
 // Update chart
 function update(data){
   var toggle = flag ? "totalSnow" : "totalRain";
-  var yScaleValue = flag ? maxSnow : maxRain;
+  
+ 
   console.log(toggle);
   console.log(data);
   
-  /* Scale */
-  var xScale = d3.scaleTime()
-    .domain(d3.extent(data[0].values, d => d.month))
-    .range([0, width - margin]);
+  /* Adjust Domain */
 
-  var yScale = d3.scaleLinear()
-    .domain([0, yScaleValue])
-    .range([height - margin, 0]);
+  // Determine y domain
+  var yScaleValue = flag ? maxSnow : maxRain;
 
+  xScale.domain(d3.extent(data[0].values, d => d.month));
+  yScale.domain([0, yScaleValue]);
+
+  var xAxis = d3.axisBottom(xScale).ticks(12);
+  var yAxis = d3.axisLeft(yScale).ticks(5);
+
+  xAxisGroup.call(xAxis);
+
+  yAxisGroup.call(yAxis)
+    .append('text')
+    .attr("y", -30)
+    .attr("transform", "rotate(-90)")
+    .attr("fill", "#000")
+    .text("Total values");
+    
   var color = d3.scaleOrdinal(d3.schemeCategory10);
 
   
@@ -213,21 +245,5 @@ function update(data){
     });
 
 
-  /* Add Axis into SVG */
-  var xAxis = d3.axisBottom(xScale).ticks(12);
-  var yAxis = d3.axisLeft(yScale).ticks(5);
-
-  svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", `translate(0, ${height - margin})`)
-    .call(xAxis);
-
-  svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis)
-    .append('text')
-    .attr("y", -30)
-    .attr("transform", "rotate(-90)")
-    .attr("fill", "#000")
-    .text("Total values");
+  
 }
