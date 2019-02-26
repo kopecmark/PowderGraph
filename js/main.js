@@ -15,8 +15,6 @@ var g = d3.select("#chart-area")
     .classed("svg-container", true) //container class to make it responsive
   .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    // .attr("width", width + margin.left + margin.right)
-    // .attr("height", height + margin.top + margin.bottom)
     .attr("viewBox", "0 0 1000 500")
     .classed("svg-content-responsive", true)
   .append("g")
@@ -211,7 +209,7 @@ function update(data) {
       .attr("y", (m) => { return y(m[value]) })
       .attr("height", (m) => { return height - y(m[value]); })
   
-  var label = flag ? "Snow" : "Rain"
+  var label = flag ? "Snow" : "Rain";
   
   yLabel.text(label);
 

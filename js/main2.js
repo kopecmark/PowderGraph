@@ -1,19 +1,41 @@
+// Data variables
 var formattedData;
 var formattedDataYearly=[];
 var allYears = [];
 var data = []; 
 var flag = true;
+var maxSnow = 0;
+var maxRain = 0;
 
+// Table variables
+var width = 500;
+var height = 300;
+var margin = 50;
+var duration = 250;
+
+var lineOpacity = "0.25";
+var lineOpacityHover = "0.85";
+var otherLinesOpacityHover = "0.1";
+var lineStroke = "3.5px";
+var lineStrokeHover = "4.5px";
+
+var circleOpacity = '0.85';
+var circleOpacityOnLineHover = "0.25";
+var circleRadius = 3;
+var circleRadiusHover = 6;
+
+// Data extraction from csv file
 d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   formattedData = data.map((month) => {
+    
     const newMonth = {};
     newMonth.totalSnow = Number(month['Total Snow (cm)']);
     newMonth.Month = +month.Month;
     newMonth.Year = +month.Year;
     newMonth.totalRain = Math.round(Number(month['Total Rain (mm)']) / 10);
     var parseTime = d3.timeParse("%Y-%m");
-    var formatTime = d3.timeFormat("%b-%Y");
-    newMonth['Date/Time'] = formatTime(parseTime(month['Date/Time']));
+    var formatTime = d3.timeFormat("%b");
+    newMonth['MonthText'] = formatTime(parseTime(month['Date/Time']));
 
     if (!allYears.includes(newMonth.Year)){
       allYears.push(newMonth.Year);
@@ -22,10 +44,8 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     return newMonth;
   });
 
+    console.log(formattedData)
   // format data for use in a line graph
-  var maxSnow = 0;
-  var maxRain = 0;
-
   allYears.forEach(year => {
     var singleYear = {year: year, values: []};
 
@@ -43,30 +63,36 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     formattedDataYearly.push(singleYear);
   });
 
-  update(formattedDataYearly, maxSnow, maxRain);
+  update(formattedDataYearly);
 
 });
 
-var width = 500;
-var height = 300;
-var margin = 50;
-var duration = 250;
 
-var lineOpacity = "0.25";
-var lineOpacityHover = "0.85";
-var otherLinesOpacityHover = "0.1";
-var lineStroke = "3.5px";
-var lineStrokeHover = "4.5px";
 
-var circleOpacity = '0.85';
-var circleOpacityOnLineHover = "0.25";
-var circleRadius = 3;
-var circleRadiusHover = 6;
+// Toggle between rain and snow
+let button = document.getElementById("precip-button");
 
-function update(data, maxSnow, maxRain){
+button.onclick = () => {
+  // console.log(button.innerHTML)
+  if (button.innerHTML == "Snow") {
+    button.innerHTML = "Rain";
+  }
+  else {
+    button.innerHTML = "Snow";
+  }
+  flag = !flag;
+  // console.log(formattedData)
+
+  update(formattedDataYearly);
+};
+
+
+// Update chart
+function update(data){
   var toggle = flag ? "totalSnow" : "totalRain";
   var yScaleValue = flag ? maxSnow : maxRain;
-  console.log(toggle)
+  console.log(toggle);
+  console.log(data);
   
   /* Scale */
   var xScale = d3.scaleTime()
