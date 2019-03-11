@@ -124,6 +124,7 @@ slider.oninput = function () {
   output.innerHTML = this.value;
   year = Number(this.value);
 }
+
 slider.onchange = function () {
   output.innerHTML = this.value;
   year = Number(this.value);
