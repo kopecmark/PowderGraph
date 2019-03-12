@@ -71,7 +71,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     return newMonth;
   });
 
-
+  
   // format data for use in a line graph
   allYears.forEach(year => {
     var singleYear = {year: year, values: []};
@@ -89,6 +89,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     
     formattedDataYearly.push(singleYear);
   });
+
 
   // d3.interval(() => {
   //   update(formattedDataYearly);
@@ -154,38 +155,38 @@ function update(data){
   /* Add line into SVG */
   var line = d3.line()
     .x(d => xScale(d.month))
-    .y(d => yScale(d[toggle]));
+    .y(d => yScale(d[toggle]));  
 
-  // let lines = svg.append('g')
-  //   .attr('class', 'lines');
-
-  let lines = svg.selectAll('.line-group')
-    .data(data);
+  let lines = svg.append('g')
+    .attr('class', 'lines');
 
   // EXIT old elements
-  lines.exit().remove();
-
+  // lines.selectAll('.line-group').exit().remove();
+    
   // UPDATE old elements
-  lines
-    .attr('class', 'line')
-    .attr('d', d => line(d.values))
-    .style('stroke', (d, i) => color(i))
-    .style('opacity', lineOpacity)
+  // lines
+  //   .data(data)
+  //   .selectAll('.line-group')
+  //   .append('g')
+  //   .attr('class', 'line-group')
+  //   .append('path')
+  //   .attr('class', 'line')
+  //   .attr('d', d => line(d.values))
+  //   .style('stroke', (d, i) => color(i))
+  //   .style('opacity', lineOpacity);
 
+    
   // ENTER new elements
-    lines.enter()
-      .append('g')
-        .attr('class', 'line-group')
-      .append('path')
-        .attr('class', 'line')
-        .attr('d', d => line(d.values))
-        .style('stroke', (d, i) => color(i))
-        .style('opacity', lineOpacity)
-
-        console.log(lines);
-
-
-
+  lines.selectAll('.line-group')
+  .data(data).enter()
+  .append('g')
+  .attr('class', 'line-group')
+  .append('path')
+  .attr('class', 'line')
+  .attr('d', d => line(d.values))
+  .style('stroke', (d, i) => color(i))
+  .style('opacity', lineOpacity);
+    
 
     // .on("mouseover", function (d, i) {
     //   svg.append("text")
