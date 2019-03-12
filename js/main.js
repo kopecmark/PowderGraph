@@ -60,7 +60,6 @@ g.append("text")
 
 // Y Label Name
 var yLabel = g.append("text")
-  // .attr("class", "y axis-label")
   .attr("x", - (height / 2))
   .attr("y", -60)
   .attr("font-size", "15px")
