@@ -6,6 +6,7 @@ var data = [];
 var flag = true;
 var maxSnow = 0;
 var maxRain = 0;
+var t = d3.transition().duration(750);
 
 // Table variables
 var width = 500;
@@ -39,7 +40,6 @@ var yScale = d3.scaleLinear()
   .range([height - margin, 0]);
 
 /* Add Axis into SVG */
-
 
 var xAxisGroup = svg.append("g")
   .attr("class", "x axis")
@@ -136,7 +136,12 @@ function update(data){
   yScale.domain([0, yScaleValue]);
 
   var xAxis = d3.axisBottom(xScale).ticks(12);
-  var yAxis = d3.axisLeft(yScale).ticks(5);
+
+  var yAxis = d3.axisLeft(yScale)
+    .ticks(5)
+    .tickFormat((snowLevel) => {
+      return snowLevel + "cm"
+    });;
 
   xAxisGroup.call(xAxis);
 
@@ -163,6 +168,7 @@ function update(data){
 
 
   d3.selectAll("path.line").remove();
+
   d3.selectAll("g.circle").remove();
 
   lines.selectAll('.line-group')
