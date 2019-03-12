@@ -139,9 +139,9 @@ function update(data){
 
   var yAxis = d3.axisLeft(yScale)
     .ticks(5)
-    .tickFormat((snowLevel) => {
-      return snowLevel + "cm"
-    });;
+    .tickFormat((precipAmount) => {
+      return precipAmount + "cm"
+    });
 
   xAxisGroup.call(xAxis);
 
@@ -151,6 +151,14 @@ function update(data){
     .attr("transform", "rotate(-90)")
     .attr("fill", "#000")
     .text("Total values");
+
+  var yLabel = svg.append("text")
+    .attr("x", - (100 / 2))
+    .attr("y", 0)
+    .attr("font-size", "15px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+
 
   var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -259,5 +267,6 @@ function update(data){
         .attr("r", circleRadius);
     });
 
-  
+  var label = flag ? "Snow" : "Rain";
+  yLabel.text(label);
 }
