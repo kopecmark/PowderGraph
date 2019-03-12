@@ -160,110 +160,98 @@ function update(data){
   let lines = svg.append('g')
     .attr('class', 'lines');
 
-  // EXIT old elements
-  // lines.selectAll('.line-group').exit().remove();
-    
-  // UPDATE old elements
-  // lines
-  //   .data(data)
-  //   .selectAll('.line-group')
-  //   .append('g')
-  //   .attr('class', 'line-group')
-  //   .append('path')
-  //   .attr('class', 'line')
-  //   .attr('d', d => line(d.values))
-  //   .style('stroke', (d, i) => color(i))
-  //   .style('opacity', lineOpacity);
 
-    
-  // ENTER new elements
+
+  d3.selectAll("path.line").remove();
+  d3.selectAll("g.circle").remove();
+
   lines.selectAll('.line-group')
-  .data(data).enter()
-  .append('g')
-  .attr('class', 'line-group')
-  .append('path')
-  .attr('class', 'line')
-  .attr('d', d => line(d.values))
-  .style('stroke', (d, i) => color(i))
-  .style('opacity', lineOpacity);
+    .data(data)
+    .enter().append("path")
+    .attr("class", "line")
+    .attr("d", d => line(d.values))
+    .style('stroke', (d, i) => color(i))
+    .style('opacity', lineOpacity)
+   
+
     
 
-    // .on("mouseover", function (d, i) {
-    //   svg.append("text")
-    //     .attr("class", "title-text")
-    //     .style("fill", color(i))
-    //     .text(d.year)
-    //     .attr("text-anchor", "middle")
-    //     .attr("x", (width - margin) / 2)
-    //     .attr("y", 5);
-    // })
-    // .on("mouseout", function (d) {
-    //   svg.select(".title-text").remove();
-    // })
+    .on("mouseover", function (d, i) {
+      svg.append("text")
+        .attr("class", "title-text")
+        .style("fill", color(i))
+        .text(d.year)
+        .attr("text-anchor", "middle")
+        .attr("x", (width - margin) / 2)
+        .attr("y", 5);
+    })
+    .on("mouseout", function (d) {
+      svg.select(".title-text").remove();
+    })
    
-    // .on("mouseover", function (d) {
-    //   d3.selectAll('.line')
-    //     .style('opacity', otherLinesOpacityHover);
-    //   d3.selectAll('.circle')
-    //     .style('opacity', circleOpacityOnLineHover);
-    //   d3.select(this)
-    //     .style('opacity', lineOpacityHover)
-    //     .style("stroke-width", lineStrokeHover)
-    //     .style("cursor", "pointer");
-    // })
-    // .on("mouseout", function (d) {
-    //   d3.selectAll(".line")
-    //     .style('opacity', lineOpacity);
-    //   d3.selectAll('.circle')
-    //     .style('opacity', circleOpacity);
-    //   d3.select(this)
-    //     .style("stroke-width", lineStroke)
-    //     .style("cursor", "none");
-    // });
+    .on("mouseover", function (d) {
+      d3.selectAll('.line')
+        .style('opacity', otherLinesOpacityHover);
+      d3.selectAll('.circle')
+        .style('opacity', circleOpacityOnLineHover);
+      d3.select(this)
+        .style('opacity', lineOpacityHover)
+        .style("stroke-width", lineStrokeHover)
+        .style("cursor", "pointer");
+    })
+    .on("mouseout", function (d) {
+      d3.selectAll(".line")
+        .style('opacity', lineOpacity);
+      d3.selectAll('.circle')
+        .style('opacity', circleOpacity);
+      d3.select(this)
+        .style("stroke-width", lineStroke)
+        .style("cursor", "none");
+    });
 
 
   /* Add circles in the line */
-  // lines.selectAll("circle-group")
-  //   .data(data).enter()
-  //   .append("g")
-  //   .style("fill", (d, i) => color(i))
-  //   .selectAll("circle")
-  //   .data(d => d.values).enter()
-  //   .append("g")
-  //   .attr("class", "circle")
-  //   .on("mouseover", function (d) {
-  //     d3.select(this)
-  //       .style("cursor", "pointer")
-  //       .append("text")
-  //       .attr("class", "text")
-  //       .text(`${d[toggle]}`)
-  //       .attr("x", d => xScale(d.month) + 5)
-  //       .attr("y", d => yScale(d[toggle]) - 10);
-  //   })
-  //   .on("mouseout", function (d) {
-  //     d3.select(this)
-  //       .style("cursor", "none")
-  //       .transition()
-  //       .duration(duration)
-  //       .selectAll(".text").remove();
-  //   })
-  //   .append("circle")
-  //   .attr("cx", d => xScale(d.month))
-  //   .attr("cy", d => yScale(d[toggle]))
-  //   .attr("r", circleRadius)
-  //   .style('opacity', circleOpacity)
-  //   .on("mouseover", function (d) {
-  //     d3.select(this)
-  //       .transition()
-  //       .duration(duration)
-  //       .attr("r", circleRadiusHover);
-  //   })
-  //   .on("mouseout", function (d) {
-  //     d3.select(this)
-  //       .transition()
-  //       .duration(duration)
-  //       .attr("r", circleRadius);
-  //   });
+  lines.selectAll("circle-group")
+    .data(data).enter()
+    .append("g")
+    .style("fill", (d, i) => color(i))
+    .selectAll("circle")
+    .data(d => d.values).enter()
+    .append("g")
+    .attr("class", "circle")
+    .on("mouseover", function (d) {
+      d3.select(this)
+        .style("cursor", "pointer")
+        .append("text")
+        .attr("class", "text")
+        .text(`${d[toggle]}`)
+        .attr("x", d => xScale(d.month) + 5)
+        .attr("y", d => yScale(d[toggle]) - 10);
+    })
+    .on("mouseout", function (d) {
+      d3.select(this)
+        .style("cursor", "none")
+        .transition()
+        .duration(duration)
+        .selectAll(".text").remove();
+    })
+    .append("circle")
+    .attr("cx", d => xScale(d.month))
+    .attr("cy", d => yScale(d[toggle]))
+    .attr("r", circleRadius)
+    .style('opacity', circleOpacity)
+    .on("mouseover", function (d) {
+      d3.select(this)
+        .transition()
+        .duration(duration)
+        .attr("r", circleRadiusHover);
+    })
+    .on("mouseout", function (d) {
+      d3.select(this)
+        .transition()
+        .duration(duration)
+        .attr("r", circleRadius);
+    });
 
   
 }
