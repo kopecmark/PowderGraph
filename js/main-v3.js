@@ -49,7 +49,12 @@ var xAxisGroup = svg.append("g")
 var yAxisGroup = svg.append("g")
   .attr("class", "y axis")
  
-
+var yLabel = svg.append("text")
+  .attr("x", - (100 / 2))
+  .attr("y", -12)
+  .attr("font-size", "15px")
+  .attr("text-anchor", "middle")
+  .attr("transform", "rotate(-90)")
 
 // Data extraction from csv file
 d3.csv("data/ll_monthly_snow.csv").then(function (data) {
@@ -145,25 +150,12 @@ function update(data){
 
   xAxisGroup.call(xAxis);
 
-  yAxisGroup.call(yAxis)
-    .append('text')
-    .attr("y", -30)
-    .attr("transform", "rotate(-90)")
-    .attr("fill", "#000")
-    .text("Total values");
+  yAxisGroup.call(yAxis);
 
-  var yLabel = svg.append("text")
-    .attr("x", - (100 / 2))
-    .attr("y", 0)
-    .attr("font-size", "15px")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
+ 
 
 
   var color = d3.scaleOrdinal(d3.schemeCategory10);
-
-  
-
 
   /* Add line into SVG */
   var line = d3.line()
