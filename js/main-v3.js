@@ -9,9 +9,13 @@ var maxRain = 0;
 var t = d3.transition().duration(750);
 
 // Table variables
-var width = 500;
-var height = 300;
-var margin = 50;
+
+var margin = { left: 100, right: 10, top: 10, bottom: 100 }
+var width = 1000 - margin.left - margin.right;
+var height = 500 - margin.top - margin.bottom;
+// var width = 500;
+// var height = 300;
+// var margin = 50;
 var duration = 250;
 
 var lineOpacity = "0.25";
@@ -26,24 +30,28 @@ var circleRadius = 3;
 var circleRadiusHover = 6;
 
 /* Add SVG */
-  var svg = d3.select("#chart").append("svg")
-    .attr("width", (width + margin) + "px")
-    .attr("height", (height + margin) + "px")
-    .append('g')
-    .attr("transform", `translate(${margin}, ${margin})`);
+var svg = d3.select("#chart")
+  .append("div")
+  .classed("svg-container", true) //container class to make it responsive
+  .append("svg")
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", "0 0 1000 500")
+    .classed("svg-content-responsive", true)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
 
 /* Scale Axis */
 var xScale = d3.scaleTime()
-  .range([0, width - margin]);
+  .range([0, width]);
 
 var yScale = d3.scaleLinear()
-  .range([height - margin, 0]);
+  .range([height, 0]);
 
 /* Add Axis into SVG */
 
 var xAxisGroup = svg.append("g")
   .attr("class", "x axis")
-  .attr("transform", `translate(0, ${height - margin})`)
+  .attr("transform", `translate(0, ${height})`)
  
 
 var yAxisGroup = svg.append("g")
@@ -51,7 +59,7 @@ var yAxisGroup = svg.append("g")
  
 var yLabel = svg.append("text")
   .attr("x", - (100 / 2))
-  .attr("y", -12)
+  .attr("y", -60)
   .attr("font-size", "15px")
   .attr("text-anchor", "middle")
   .attr("transform", "rotate(-90)")
