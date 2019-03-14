@@ -106,11 +106,6 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     formattedDataYearly.push(singleYear);
   });
 
-
-  // d3.interval(() => {
-  //   update(formattedDataYearly);
-  // }, 5000);
-
   update(formattedDataYearly);
 
 });
@@ -121,7 +116,6 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
 let button = document.getElementById("precip-button");
 
 button.onclick = () => {
-  // console.log(button.innerHTML)
   if (button.innerHTML == "Snow") {
     button.innerHTML = "Rain";
   }
@@ -129,7 +123,6 @@ button.onclick = () => {
     button.innerHTML = "Snow";
   }
   flag = !flag;
-  // console.log(formattedData)
 
   update(formattedDataYearly);
 };
