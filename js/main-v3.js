@@ -176,28 +176,29 @@ function update(data){
   d3.selectAll("g.circle").remove();
 
   lines.selectAll('.line-group')
-    .data(data)
-    .enter().append("path")
+    .data(data).enter()
+    .append('g')
+    .attr('class', 'line-group')  
+    .on("mouseover", function (d, i) {
+    svg.append("text")
+      .attr("class", "title-text")
+      .style("fill", color(i))
+      .text(d.year)
+      .attr("text-anchor", "middle")
+      .attr("x", 100)
+      .attr("y", 5);
+  })
+    .on("mouseout", function (d) {
+      svg.select(".title-text").remove();
+    })
+    .append("path")
     .attr("class", "line")
     .attr("d", d => line(d.values))
     .style('stroke', (d, i) => color(i))
     .style('opacity', lineOpacity)
-   
+
 
     
-
-    .on("mouseover", function (d, i) {
-      svg.append("text")
-        .attr("class", "title-text")
-        .style("fill", color(i))
-        .text(d.year)
-        .attr("text-anchor", "middle")
-        .attr("x", (width - margin) / 2)
-        .attr("y", 5);
-    })
-    .on("mouseout", function (d) {
-      svg.select(".title-text").remove();
-    })
    
     .on("mouseover", function (d) {
       d3.selectAll('.line')
