@@ -65,7 +65,6 @@ var yLabel = g.append("text")
   .attr("font-size", "15px")
   .attr("text-anchor", "middle")
   .attr("transform", "rotate(-90)")
-  .text("Monthly Snow Accumilation (cm)");
 
   
 d3.csv("data/ll_monthly_snow.csv").then(function(data){
