@@ -149,7 +149,7 @@ function update(data){
   var yAxis = d3.axisLeft(yScale)
     .ticks(5)
     .tickFormat((precipAmount) => {
-      return precipAmount + "cm"
+      return precipAmount + "cm";
     });
 
   xAxisGroup.call(xAxis);
