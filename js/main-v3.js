@@ -50,17 +50,19 @@ var yScale = d3.scaleLinear()
 /* Add Axis into SVG */
 
 var xAxisGroup = svg.append("g")
-  .attr("class", "x axis")
+  .attr("class", "x-axis")
   .attr("transform", `translate(0, ${height})`)
  
 
 var yAxisGroup = svg.append("g")
-  .attr("class", "y axis")
- console.log(width)
+  .attr("class", "y-axis")
+
+  console.log(height)
+
 
 var yLabel = svg.append("text")
-  .attr("x", width / 2)
-  .attr("y", height + 80)
+  .attr("x", - (height / 2) )
+  .attr("y", -60)
   .attr("font-size", "15px")
   .attr("text-anchor", "middle")
   .attr("transform", "rotate(-90)")
