@@ -10,7 +10,7 @@ var t = d3.transition().duration(750);
 
 // Table variables
 
-var margin = { left: 100, right: 10, top: 10, bottom: 100 }
+var margin = { left: 100, right: 50, top: 50, bottom: 100 }
 var width = 1000 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
 // var width = 500;
@@ -56,10 +56,11 @@ var xAxisGroup = svg.append("g")
 
 var yAxisGroup = svg.append("g")
   .attr("class", "y axis")
- 
+ console.log(width)
+
 var yLabel = svg.append("text")
-  .attr("x", - (100 / 2))
-  .attr("y", -60)
+  .attr("x", width / 2)
+  .attr("y", height + 80)
   .attr("font-size", "15px")
   .attr("text-anchor", "middle")
   .attr("transform", "rotate(-90)")
