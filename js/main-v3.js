@@ -185,7 +185,7 @@ function update(data){
       .style("fill", color(i))
       .text(d.year)
       .attr("text-anchor", "middle")
-      .attr("x", 100)
+      .attr("x",width / 2)
       .attr("y", 5);
   })
     .on("mouseout", function (d) {
