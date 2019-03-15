@@ -6,7 +6,7 @@ var data = [];
 var flag = true;
 var maxSnow = 0;
 var maxRain = 0;
-var t = d3.transition().duration(750);
+// var t = d3.transition().duration(750);
 
 // Table variables
 
@@ -16,7 +16,7 @@ var height = 500 - margin.top - margin.bottom;
 // var width = 500;
 // var height = 300;
 // var margin = 50;
-var duration = 250;
+var duration = 300;
 
 var lineOpacity = "0.25";
 var lineOpacityHover = "0.85";
@@ -264,6 +264,6 @@ function update(data){
         .attr("r", circleRadius);
     });
 
-  var label = flag ? "Snow" : "Rain";
+  var label = flag ? "Total Snow Fall" : "Total Rain Fall";
   yLabel.text(label);
 }
