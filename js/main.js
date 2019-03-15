@@ -10,7 +10,7 @@ var year = 1919;
 
 var t = d3.transition().duration(750);
 
-var g = d3.select("#chart-area")
+var g = d3.select("#chart-area-bar")
   .append("div")
     .classed("svg-container", true) //container class to make it responsive
   .append("svg")
