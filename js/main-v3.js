@@ -30,7 +30,7 @@ var circleRadius = 3;
 var circleRadiusHover = 6;
 
 /* Add SVG */
-var svg = d3.select("#chart")
+var svg = d3.select("#chart-area-line")
   .append("div")
   .classed("svg-container", true) //container class to make it responsive
   .append("svg")
@@ -56,9 +56,6 @@ var xAxisGroup = svg.append("g")
 
 var yAxisGroup = svg.append("g")
   .attr("class", "y-axis")
-
-  console.log(height)
-
 
 var yLabel = svg.append("text")
   .attr("x", - (height / 2) )
@@ -106,35 +103,31 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     formattedDataYearly.push(singleYear);
   });
 
-  update(formattedDataYearly);
+  updateLineGraph(formattedDataYearly);
 
 });
 
 
 
 // Toggle between rain and snow
-let button = document.getElementById("precip-button");
+let button2 = document.getElementById("precip-button");
 
-button.onclick = () => {
-  if (button.innerHTML == "Snow") {
-    button.innerHTML = "Rain";
+button2.onclick = () => {
+  if (button2.innerHTML == "Snow") {
+    button2.innerHTML = "Rain";
   }
   else {
-    button.innerHTML = "Snow";
+    button2.innerHTML = "Snow";
   }
   flag = !flag;
 
-  update(formattedDataYearly);
+  updateLineGraph(formattedDataYearly);
 };
 
 
 // Update chart
-function update(data){
+function updateLineGraph(data){
   var toggle = flag ? "totalSnow" : "totalRain";
-  
- 
-  console.log(toggle);
-  console.log(data);
   
   /* Adjust Domain */
 
