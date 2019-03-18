@@ -1,10 +1,14 @@
-var slider = document.getElementById('range-slider');
+var rangeSlider = document.getElementById('range-slider');
 
-noUiSlider.create(slider, {
-  start: [20, 80],
+noUiSlider.create(rangeSlider, {
+  start: [1919, 2007],
+  tooltips: [true, true],
   connect: true,
   range: {
-    'min': 0,
-    'max': 100
-  }
+    'min': 1919,
+    'max': 2007
+  },
+  format: wNumb({
+    decimals: 0
+  })
 });
