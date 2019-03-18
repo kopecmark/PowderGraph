@@ -19,7 +19,10 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
   selectedData = vis.formattedData.filter((d) => {
     return d.Year === 1919;
   })
-  update(selectedData);
+
+  barChart = new BarChart("#chart-area-bar");
+
+  // update(selectedData);
 })
 
 // Function to switch between snow and rain
@@ -67,7 +70,7 @@ slider.onchange = function () {
   // console.log(vis.year)
   // console.log(selectedData)
   update(selectedData);
-}
+};
 
 
 
