@@ -18,11 +18,11 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
     var formatTime = d3.timeFormat("%b-%Y");
     newMonth['Date/Time'] = formatTime(parseTime(month['Date/Time']));
     return newMonth;
-  })
+  });
 
   selectedData = formattedData.filter((d) => {
     return d.Year === 1919;
-  })
+  });
 
   barChart = new BarChart("#chart-area-bar", selectedData);
 
