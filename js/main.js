@@ -20,6 +20,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     var formatTime = d3.timeFormat("%b");
     newMonth['MonthText'] = formatTime(parseTime(month['Date/Time']));
 
+    // Develop an array that includes all years available in the data
     if (!allYears.includes(newMonth.Year)) {
       allYears.push(newMonth.Year);
     }
@@ -45,19 +46,17 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
 
     formattedDataYearly.push(singleYear);
   });
-
-  lineChart = new LineChart("#chart-area-line", formattedDataYearly);
-
+  
   // Parse data for a single year
   selectedData = formattedData.filter((d) => {
     return d.Year === 1919;
   });
-
-  console.log(selectedData);
+  
+  // Create line and bar chart
+  lineChart = new LineChart("#chart-area-line", formattedDataYearly);
   barChart = new BarChart("#chart-area-bar", selectedData);
 
 });
-
 
 // Function to switch between snow and rain
 let button = document.getElementById("precip-button");
