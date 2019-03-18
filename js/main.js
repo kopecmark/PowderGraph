@@ -64,12 +64,9 @@ slider.oninput = function () {
 slider.onchange = function () {
   output.innerHTML = this.value;
   year = Number(this.value);
-  console.log(year)
   let selectedData = formattedData.filter((d) => {
     return d.Year === year;
   });
-  console.log(selectedData)
-
   barChart.wrangleData(selectedData);
 };
 
