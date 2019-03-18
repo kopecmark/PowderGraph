@@ -1,7 +1,7 @@
 // Constructor to create a new visualization?
-BarChart = function(_parentElement){
+BarChart = function(_parentElement, data){
   this.parentElement = _parentElement;
-
+  this.data = data;
   this.initVis();
 }
 
@@ -15,13 +15,9 @@ BarChart.prototype.initVis = function(){
   vis.width = 1000 - vis.margin.left - vis.margin.right;
   vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
-  vis.flag = true;
-  vis.formattedData;
-  vis.year = 1919;
-
   vis.t = d3.transition().duration(750);
 
-  var g = d3.select(vis.parentElement)
+  vis.g = d3.select(vis.parentElement)
     .append("div")
     .classed("svg-container", true) //container class to make it responsive
     .append("svg")
@@ -48,7 +44,7 @@ BarChart.prototype.initVis = function(){
       text += "<strong>Rain:</strong> <span style='color:red'>" + d3.format(".1f")(d.totalRain) + "</span><br>";
       return text;
     });
-  g.call(vis.tip);
+  vis.g.call(vis.tip);
 
 
   // Scale the axis
@@ -81,8 +77,9 @@ BarChart.prototype.initVis = function(){
 }
 
 // Method for filtering/selecting the data to be used
-BarChart.prototype.wrangleData = function(){
+BarChart.prototype.wrangleData = function(filteredData){
   var vis = this;
+  data = filteredData;
 
   vis.updateVis();
 
@@ -91,19 +88,18 @@ BarChart.prototype.wrangleData = function(){
 // Method to update elements to match the new data
 BarChart.prototype.updateVis = function(){
   var vis = this;
+  vis.value = flag ? "totalSnow" : "totalRain";
 
-  vis.value = vis.flag ? "totalSnow" : "totalRain";
-
-  vis.max = d3.max(data, (month) => {
-    return month[value];
+  vis.max = d3.max(vis.data, (month) => {
+    return month[vis.value];
   })
 
-  vis.x.domain(data.map((month) => {
+  vis.x.domain(vis.data.map((month) => {
     return month['Date/Time'];
   }))
 
 
-  vis.y.domain([0, max]);
+  vis.y.domain([0, vis.max]);
 
   // X axis
   vis.xAxisCall = d3.axisBottom(vis.x)
@@ -123,43 +119,43 @@ BarChart.prototype.updateVis = function(){
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-40)");
 
-  vis.yAxisGroup.transition(y).call(yAxisCall);
+  vis.yAxisGroup.transition(vis.y).call(vis.yAxisCall);
 
   // JOIN new data with old elements
-  vis.rect = g.selectAll("rect")
-    .data(data);
+  vis.rect = vis.g.selectAll("rect")
+    .data(vis.data);
 
   // EXIT old elements not present in new data
   vis.rect.exit().remove()
     .attr("fill", "red")
     .transition(vis.t)
-    .attr("y", y(0))
+    .attr("y", vis.y(0)) //double check this
     .remove();
 
   // UPDATE old elements present in new data
   vis.rect.transition(vis.t)
-    .attr("x", (m) => { return x(m['Date/Time']) })
-    .attr("y", (m) => { return y(m[value]) })
+    .attr("x", (m) => { return vis.x(m['Date/Time']) })
+    .attr("y", (m) => { return vis.y(m[vis.value]) })
     .attr("width", vis.x.bandwidth)
-    .attr("height", (m) => { return vis.height - y(m[value]); })
+    .attr("height", (m) => { return vis.height - vis.y(m[vis.value]); })
 
 
-  rect.enter()
+  vis.rect.enter()
     .append("rect")
-    .attr("x", (m) => { return x(m['Date/Time']) })
+    .attr("x", (m) => { return vis.x(m['Date/Time']) })
     .attr("width", vis.x.bandwidth)
     .attr("fill", d3.rgb("#1C7192"))
-    .attr("y", y(0))
+    .attr("y", vis.y(0))
     .attr("height", 0)
     .on("mouseover", vis.tip.show)
     .on("mouseout", vis.tip.hide)
     // AND UPDATE old elements present in new data
     .merge(vis.rect)
     .transition(vis.t)
-    .attr("y", (m) => { return y(m[value]) })
-    .attr("height", (m) => { return vis.height - y(m[value]); })
+    .attr("y", (m) => { return vis.y(m[vis.value]) })
+    .attr("height", (m) => { return vis.height - vis.y(m[vis.value]); })
 
-  vis.label = vis.flag ? "Snow" : "Rain";
+  vis.label = flag ? "Snow" : "Rain";
 
   vis.yLabel.text(vis.label);
 
