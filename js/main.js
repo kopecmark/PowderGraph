@@ -12,7 +12,7 @@ var maxRain = 0;
 
 d3.csv("data/ll_monthly_snow.csv").then(function(data){
    formattedData = data.map( (month) => {
-    const newMonth = {}
+    const newMonth = {};
     newMonth.totalSnow = Number(month['Total Snow (cm)']);
     newMonth.Month = +month.Month;
     newMonth.Year = +month.Year;
@@ -94,6 +94,7 @@ button.onclick = () => {
   });
 
   barChart.wrangleData(selectedData);
+  console.log(formattedDataYearly);
   lineChart.wrangleData(formattedDataYearly);
 };
 
