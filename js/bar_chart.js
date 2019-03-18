@@ -131,7 +131,7 @@ BarChart.prototype.updateVis = function(){
   vis.rect.exit().remove()
     .attr("fill", "red")
     .transition(vis.t)
-    .attr("y", vis.y(0)) //double check this
+    .attr("y", vis.y(0)) 
     .remove();
 
   // UPDATE old elements present in new data

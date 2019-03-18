@@ -34,7 +34,6 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
 let button = document.getElementById("precip-button")
   
 button.onclick = () => {
-  // console.log(button.innerHTML)
   if (button.innerHTML == "Snow") {
       button.innerHTML = "Rain";
   }
