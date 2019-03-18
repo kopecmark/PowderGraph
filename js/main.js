@@ -1,6 +1,5 @@
 var flag = true;
 var formattedData;
-var formattedData2;
 var year = 1919;
 var barChart;
 var lineChart;
@@ -8,31 +7,6 @@ var formattedDataYearly = [];
 var allYears = [];
 var maxSnow = 0;
 var maxRain = 0;
-
-
-// d3.csv("data/ll_monthly_snow.csv").then(function(data){
-//    formattedData = data.map( (month) => {
-//     const newMonth = {};
-//     newMonth.totalSnow = Number(month['Total Snow (cm)']);
-//     newMonth.Month = +month.Month;
-//     newMonth.Year = +month.Year;
-//     newMonth.meanTemp = Number(month['Mean Temp (°C)']);
-//     newMonth.meanMaxTemp = Number(month['Mean Max Temp (°C)']);
-//     newMonth.meanMinTemp = Number(month['Mean Min Temp (°C)']);
-//     newMonth.totalRain = Math.round(Number(month['Total Rain (mm)'])/10);
-//     var parseTime = d3.timeParse("%Y-%m");
-//     var formatTime = d3.timeFormat("%b-%Y");
-//     newMonth['Date/Time'] = formatTime(parseTime(month['Date/Time']));
-//     return newMonth;
-//   });
-
-//   selectedData = formattedData.filter((d) => {
-//     return d.Year === 1919;
-//   });
-//  console.log(selectedData)
-//   barChart = new BarChart("#chart-area-bar", selectedData);
-// });
-
 
 d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   formattedData = data.map((month) => {
@@ -74,15 +48,13 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
 
   lineChart = new LineChart("#chart-area-line", formattedDataYearly);
 
-  // Parse for a single year
+  // Parse data for a single year
   selectedData = formattedData.filter((d) => {
     return d.Year === 1919;
   });
 
   console.log(selectedData);
   barChart = new BarChart("#chart-area-bar", selectedData);
-
-
 
 });
 
