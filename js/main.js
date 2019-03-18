@@ -71,7 +71,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
 
     formattedDataYearly.push(singleYear);
   });
-
+  console.log(formattedDataYearly)
   lineChart = new LineChart("#chart-area-line", formattedDataYearly);
 
 });
@@ -94,14 +94,13 @@ button.onclick = () => {
   });
 
   barChart.wrangleData(selectedData);
-  console.log(formattedDataYearly);
   lineChart.wrangleData(formattedDataYearly);
 };
 
 
 // Slider
-var slider = document.getElementById("myRange");
-var output = document.getElementById("year");
+let slider = document.getElementById("singleYear");
+let output = document.getElementById("year");
 output.innerHTML = slider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
@@ -119,5 +118,15 @@ slider.onchange = function () {
   barChart.wrangleData(selectedData);
 };
 
+// Range Slider
 
+let rangeSliderElement = document.getElementById('range-slider-value');
 
+rangeSlider.noUiSlider.on('change', yearValues => {
+  [yearValues[0], yearValues[1]] = [parseInt(yearValues[0]), parseInt(yearValues[1])];
+  console.log(yearValues);
+  selectedData = formattedDataYearly.filter((d) => {
+    return d.year >= yearValues[0] && d.year <= yearValues[1];
+  });
+  lineChart.wrangleData(selectedData);
+});
