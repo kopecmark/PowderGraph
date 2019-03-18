@@ -1,6 +1,11 @@
+var flag = true;
+var formattedData;
+var year = 1919;
+var barChart;
+
+
 d3.csv("data/ll_monthly_snow.csv").then(function(data){
-  
-   vis.formattedData = data.map( (month) => {
+   formattedData = data.map( (month) => {
     const newMonth = {}
     newMonth.totalSnow = Number(month['Total Snow (cm)']);
     newMonth.Month = +month.Month;
@@ -15,12 +20,11 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
     return newMonth;
   })
 
-  // console.log(vis.formattedData);
-  selectedData = vis.formattedData.filter((d) => {
+  selectedData = formattedData.filter((d) => {
     return d.Year === 1919;
   })
 
-  barChart = new BarChart("#chart-area-bar");
+  barChart = new BarChart("#chart-area-bar", selectedData);
 
   // update(selectedData);
 })
@@ -37,13 +41,13 @@ button.onclick = () => {
   else {
     button.innerHTML = "Snow";
   }
-  vis.flag = !vis.flag
-  // console.log(vis.formattedData)
+  flag = !flag;
 
-  selectedData = vis.formattedData.filter((d) => {
-    return d.Year === vis.year
-  })
-  update(selectedData);
+  selectedData = formattedData.filter((d) => {
+    return d.Year === year;
+  });
+
+  barChart.wrangleData(selectedData);
 }
 
 // Slider
@@ -54,22 +58,19 @@ output.innerHTML = slider.value; // Display the default slider value
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function () {
   output.innerHTML = this.value;
-  vis.year = Number(this.value);
-}
+  year = Number(this.value);
+};
 
 slider.onchange = function () {
   output.innerHTML = this.value;
-  vis.year = Number(this.value);
-  let selectedData = vis.formattedData.filter((d) => {
-    // console.log(d)
-    // console.log(typeof vis.year)
-    // console.log(d.Year === vis.year)
-    return d.Year === vis.year
-  })
-  // console.log(vis.formattedData)
-  // console.log(vis.year)
-  // console.log(selectedData)
-  update(selectedData);
+  year = Number(this.value);
+  console.log(year)
+  let selectedData = formattedData.filter((d) => {
+    return d.Year === year;
+  });
+  console.log(selectedData)
+
+  barChart.wrangleData(selectedData);
 };
 
 
