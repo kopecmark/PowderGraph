@@ -1,4 +1,4 @@
-var slider = document.getElementById('slider');
+var slider = document.getElementById('range-slider');
 
 noUiSlider.create(slider, {
   start: [20, 80],
