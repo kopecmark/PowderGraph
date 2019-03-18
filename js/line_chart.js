@@ -1,3 +1,33 @@
+// Constructor to create a new visualization
+LineChart = function (_parentElement, _data) {
+  this.parentElement = _parentElement;
+  this.data = _data;
+  this.initVis();
+};
+
+
+
+// Method to set up static parts of the visualization
+LineChart.prototype.initVis = function () {
+  var vis = this;
+  vis.wrangleData();
+}
+
+// Method for filtering/selecting the data to be used
+LineChart.prototype.wrangleData = function (filteredData) {
+  var vis = this;
+  if (filteredData) {
+    vis.data = filteredData;
+  }
+
+  vis.updateVis();
+
+}
+
+BarChart.prototype.updateVis = function () {
+  var vis = this;
+};
+
 // Data variables
 var formattedData;
 var formattedDataYearly=[];
