@@ -97,7 +97,7 @@ BarChart.prototype.updateVis = function(){
   })
 
   vis.x.domain(vis.data.map((month) => {
-    return month['Date/Time'];
+    return month['MonthText'];
   }));
 
 
@@ -136,7 +136,7 @@ BarChart.prototype.updateVis = function(){
 
   // UPDATE old elements present in new data
   vis.rect.transition(vis.t)
-    .attr("x", (m) => { return vis.x(m['Date/Time']) })
+    .attr("x", (m) => { return vis.x(m['MonthText']) })
     .attr("y", (m) => { return vis.y(m[vis.value]) })
     .attr("width", vis.x.bandwidth)
     .attr("height", (m) => { return vis.height - vis.y(m[vis.value]); })
@@ -144,7 +144,7 @@ BarChart.prototype.updateVis = function(){
 
   vis.rect.enter()
     .append("rect")
-    .attr("x", (m) => { return vis.x(m['Date/Time']) })
+    .attr("x", (m) => { return vis.x(m['MonthText']) })
     .attr("width", vis.x.bandwidth)
     .attr("fill", d3.rgb("#1C7192"))
     .attr("y", vis.y(0))
