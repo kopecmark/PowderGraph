@@ -9,6 +9,74 @@ BarChart = function(_parentElement){
 BarChart.prototype.initVis = function(){
   var vis = this;
 
+  // Table Setup
+  var margin = { left: 100, right: 10, top: 10, bottom: 100 }
+
+  var width = 1000 - margin.left - margin.right;
+  var height = 500 - margin.top - margin.bottom;
+
+  var flag = true;
+  var formattedData;
+  var year = 1919;
+
+  var t = d3.transition().duration(750);
+
+  var g = d3.select("#chart-area-bar")
+    .append("div")
+    .classed("svg-container", true) //container class to make it responsive
+    .append("svg")
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", "0 0 1000 500")
+    .classed("svg-content-responsive", true)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+
+  var xAxisGroup = g.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", "translate(0, " + height + ")")
+
+
+  var yAxisGroup = g.append("g")
+    .attr("class", "y-axis")
+
+  // Tooltip
+  var tip = d3.tip().attr('class', 'd3-tip')
+    .html(function (d) {
+      text = "<strong>Year:</strong> <span style='color:red'>" + d.Year + "</span><br>";
+      text += "<strong>Month:</strong> <span style='color:red'>" + d.Month + "</span><br>";
+      text += "<strong>Snow:</strong> <span style='color:red'>" + d3.format(".1f")(d.totalSnow) + "</span><br>";
+      text += "<strong>Rain:</strong> <span style='color:red'>" + d3.format(".1f")(d.totalRain) + "</span><br>";
+      return text;
+    });
+  g.call(tip);
+
+
+  // Scale the axises
+  var x = d3.scaleBand()
+    .range([0, width])
+    .padding(0.2)
+
+  var y = d3.scaleLinear()
+    .range([height, 0])
+
+
+  // X Label Name
+  g.append("text")
+    // .attr("class", "x axis-label")
+    .attr("x", width / 2)
+    .attr("y", height + 80)
+    .attr("font-size", "15px")
+    .attr("text-anchor", "middle")
+    .text("Months");
+
+  // Y Label Name
+  var yLabel = g.append("text")
+    .attr("x", - (height / 2))
+    .attr("y", -60)
+    .attr("font-size", "15px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)");
+
   vis.wrangleData();
 }
 
@@ -27,73 +95,7 @@ BarChart.prototype.updateVis = function(){
 }
 
 
-// Table Setup
-var margin = { left: 100, right: 10, top: 10, bottom: 100 }
 
-var width = 1000 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom;
-
-var flag = true;
-var formattedData;
-var year = 1919;
-
-var t = d3.transition().duration(750);
-
-var g = d3.select("#chart-area-bar")
-  .append("div")
-    .classed("svg-container", true) //container class to make it responsive
-  .append("svg")
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", "0 0 1000 500")
-    .classed("svg-content-responsive", true)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
-
-var xAxisGroup = g.append("g")
-  .attr("class", "x-axis")
-  .attr("transform", "translate(0, " + height + ")")
-  
-
-var yAxisGroup = g.append("g")
-  .attr("class", "y-axis")
- 
-// Tooltip
-var tip = d3.tip().attr('class', 'd3-tip')
-  .html(function (d) {
-    text = "<strong>Year:</strong> <span style='color:red'>" + d.Year + "</span><br>";
-    text += "<strong>Month:</strong> <span style='color:red'>" + d.Month + "</span><br>";
-    text += "<strong>Snow:</strong> <span style='color:red'>" + d3.format(".1f")(d.totalSnow) + "</span><br>";
-    text += "<strong>Rain:</strong> <span style='color:red'>" + d3.format(".1f")(d.totalRain) + "</span><br>";
-    return text;
-  });
-g.call(tip);
-
-
-// Scale the axises
-var x = d3.scaleBand()
-  .range([0, width])
-  .padding(0.2)
-
-var y = d3.scaleLinear()
-  .range([height, 0])
-
-
-// X Label Name
-g.append("text")
-  // .attr("class", "x axis-label")
-  .attr("x", width / 2)
-  .attr("y", height + 80)
-  .attr("font-size", "15px")
-  .attr("text-anchor", "middle")
-  .text("Months");
-
-// Y Label Name
-var yLabel = g.append("text")
-  .attr("x", - (height / 2))
-  .attr("y", -60)
-  .attr("font-size", "15px")
-  .attr("text-anchor", "middle")
-  .attr("transform", "rotate(-90)")
 
   
 d3.csv("data/ll_monthly_snow.csv").then(function(data){
