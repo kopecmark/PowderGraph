@@ -51,7 +51,7 @@ BarChart.prototype.initVis = function(){
   g.call(tip);
 
 
-  // Scale the axises
+  // Scale the axis
   var x = d3.scaleBand()
     .range([0, width])
     .padding(0.2)
@@ -91,6 +91,77 @@ BarChart.prototype.wrangleData = function(){
 // Method to update elements to match the new data
 BarChart.prototype.updateVis = function(){
   var vis = this;
+
+  var value = flag ? "totalSnow" : "totalRain";
+
+  var max = d3.max(data, (month) => {
+    return month[value];
+  })
+
+  x.domain(data.map((month) => {
+    return month['Date/Time'];
+  }))
+
+
+  y.domain([0, max]);
+
+  // X axis
+  var xAxisCall = d3.axisBottom(x)
+    .ticks(5);
+
+  // Y axis
+  var yAxisCall = d3.axisLeft(y)
+    .ticks(10)
+    .tickFormat((snowLevel) => {
+      return snowLevel + "cm"
+    });
+
+  xAxisGroup.transition(t).call(xAxisCall)
+    .selectAll("text")
+    .attr("y", "10")
+    .attr("x", "-5")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-40)");
+
+  yAxisGroup.transition(y).call(yAxisCall);
+
+  // JOIN new data with old elements
+  var rect = g.selectAll("rect")
+    .data(data);
+
+  // EXIT old elements not present in new data
+  rect.exit().remove()
+    .attr("fill", "red")
+    .transition(t)
+    .attr("y", y(0))
+    .remove();
+
+  // UPDATE old elements present in new data
+  rect.transition(t)
+    .attr("x", (m) => { return x(m['Date/Time']) })
+    .attr("y", (m) => { return y(m[value]) })
+    .attr("width", x.bandwidth)
+    .attr("height", (m) => { return height - y(m[value]); })
+
+
+  rect.enter()
+    .append("rect")
+    .attr("x", (m) => { return x(m['Date/Time']) })
+    .attr("width", x.bandwidth)
+    .attr("fill", d3.rgb("#1C7192"))
+    .attr("y", y(0))
+    .attr("height", 0)
+    .on("mouseover", tip.show)
+    .on("mouseout", tip.hide)
+    // AND UPDATE old elements present in new data
+    .merge(rect)
+    .transition(t)
+    .attr("y", (m) => { return y(m[value]) })
+    .attr("height", (m) => { return height - y(m[value]); })
+
+  var label = flag ? "Snow" : "Rain";
+
+  yLabel.text(label);
 
 }
 
@@ -170,77 +241,4 @@ slider.onchange = function () {
 }
 
 
-function update(data) {
 
-  var value = flag ? "totalSnow" : "totalRain";
-
-  var max = d3.max(data, (month) => {
-    return month[value];
-  })
-
-  x.domain(data.map((month) => {
-    return month['Date/Time'];
-  }))
-
-
-  y.domain([0, max]);
-
-  // X axis
-  var xAxisCall = d3.axisBottom(x)
-    .ticks(5);
-
-  // Y axis
-  var yAxisCall = d3.axisLeft(y)
-    .ticks(10)
-    .tickFormat((snowLevel) => {
-      return snowLevel + "cm"
-    });
-
-  xAxisGroup.transition(t).call(xAxisCall)
-    .selectAll("text")
-    .attr("y", "10")
-    .attr("x", "-5")
-    .attr("text-anchor", "end")
-    .attr("transform", "rotate(-40)");
-
-  yAxisGroup.transition(y).call(yAxisCall);
-
-  // JOIN new data with old elements
-  var rect = g.selectAll("rect")
-    .data(data);
-
-  // EXIT old elements not present in new data
-  rect.exit().remove()
-    .attr("fill", "red")
-    .transition(t)
-      .attr("y", y(0))
-      .remove();
-
-  // UPDATE old elements present in new data
-  rect.transition(t)
-    .attr("x", (m) => {return x(m['Date/Time'])})
-    .attr("y", (m) => { return y(m[value]) })
-    .attr("width", x.bandwidth)
-    .attr("height", (m) => {return height - y(m[value]); })
-
-
-  rect.enter()
-    .append("rect")
-      .attr("x", (m) => {return x(m['Date/Time'])})
-      .attr("width", x.bandwidth)
-    .attr("fill", d3.rgb("#1C7192"))
-      .attr("y", y(0))
-      .attr("height", 0)
-      .on("mouseover", tip.show)
-      .on("mouseout", tip.hide)
-    // AND UPDATE old elements present in new data
-    .merge(rect)
-    .transition(t)
-      .attr("y", (m) => { return y(m[value]) })
-      .attr("height", (m) => { return height - y(m[value]); })
-  
-  var label = flag ? "Snow" : "Rain";
-  
-  yLabel.text(label);
-
-}
