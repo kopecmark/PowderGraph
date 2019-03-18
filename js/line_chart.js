@@ -10,8 +10,65 @@ LineChart = function (_parentElement, _data) {
 // Method to set up static parts of the visualization
 LineChart.prototype.initVis = function () {
   var vis = this;
+
+  // Table variables
+  vis.margin = { left: 100, right: 50, top: 50, bottom: 100 }
+  vis.margin = { left: 100, right: 50, top: 50, bottom: 100 }
+  vis.width = 1000 - vis.margin.left - vis.margin.right;
+  vis.width = 1000 - vis.margin.left - vis.margin.right;
+  vis.height = 500 - vis.margin.top - vis.margin.bottom;
+  vis.height = 500 - vis.margin.top - vis.margin.bottom;
+  vis.duration = 300;
+  vis.duration = 300;
+
+  vis.lineOpacity = "0.25";
+  vis.lineOpacityHover = "0.85";
+  vis.otherLinesOpacityHover = "0.1";
+  vis.lineStroke = "3.5px";
+  vis.lineStrokeHover = "4.5px";
+
+  vis.circleOpacity = '0.85';
+  vis.circleOpacityOnLineHover = "0.25";
+  vis.circleRadius = 3;
+  vis.circleRadiusHover = 6;
+
+  /* Add SVG */
+  vis.svg = d3.select("#chart-area-line")
+    .append("div")
+    .classed("svg-container", true) //container class to make it responsive
+    .append("svg")
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", "0 0 1000 500")
+    .classed("svg-content-responsive", true)
+    .append("g")
+    .attr("transform", "translate(" + vis.margin.left + ", " + vis.margin.top + ")")
+
+  /* Scale Axis */
+  vis.xScale = d3.scaleTime()
+    .range([0, vis.width]);
+
+  vis.yScale = d3.scaleLinear()
+    .range([vis.height, 0]);
+
+  /* Add Axis into SVG */
+
+  vis.xAxisGroup = vis.svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${vis.height})`)
+
+
+  vis.yAxisGroup = vis.svg.append("g")
+    .attr("class", "y-axis")
+
+  vis.yLabel = vis.svg.append("text")
+    .attr("x", - (vis.height / 2))
+    .attr("y", -60)
+    .attr("font-size", "15px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+
   vis.wrangleData();
-}
+};
 
 // Method for filtering/selecting the data to be used
 LineChart.prototype.wrangleData = function (filteredData) {
@@ -22,230 +79,95 @@ LineChart.prototype.wrangleData = function (filteredData) {
 
   vis.updateVis();
 
-}
+};
 
-BarChart.prototype.updateVis = function () {
+LineChart.prototype.updateVis = function () {
   var vis = this;
-};
 
-// Data variables
-var formattedData;
-var formattedDataYearly=[];
-var allYears = [];
-var data = []; 
-var flag = true;
-var maxSnow = 0;
-var maxRain = 0;
-// var t = d3.transition().duration(750);
+  vis.toggle = flag ? "totalSnow" : "totalRain";
 
-// Table variables
-
-var margin = { left: 100, right: 50, top: 50, bottom: 100 }
-var width = 1000 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom;
-var duration = 300;
-
-var lineOpacity = "0.25";
-var lineOpacityHover = "0.85";
-var otherLinesOpacityHover = "0.1";
-var lineStroke = "3.5px";
-var lineStrokeHover = "4.5px";
-
-var circleOpacity = '0.85';
-var circleOpacityOnLineHover = "0.25";
-var circleRadius = 3;
-var circleRadiusHover = 6;
-
-/* Add SVG */
-var svg = d3.select("#chart-area-line")
-  .append("div")
-  .classed("svg-container", true) //container class to make it responsive
-  .append("svg")
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", "0 0 1000 500")
-    .classed("svg-content-responsive", true)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
-
-/* Scale Axis */
-var xScale = d3.scaleTime()
-  .range([0, width]);
-
-var yScale = d3.scaleLinear()
-  .range([height, 0]);
-
-/* Add Axis into SVG */
-
-var xAxisGroup = svg.append("g")
-  .attr("class", "x-axis")
-  .attr("transform", `translate(0, ${height})`)
- 
-
-var yAxisGroup = svg.append("g")
-  .attr("class", "y-axis")
-
-var yLabel = svg.append("text")
-  .attr("x", - (height / 2) )
-  .attr("y", -60)
-  .attr("font-size", "15px")
-  .attr("text-anchor", "middle")
-  .attr("transform", "rotate(-90)")
-
-// Data extraction from csv file
-d3.csv("data/ll_monthly_snow.csv").then(function (data) {
-  formattedData = data.map((month) => {
-    
-    const newMonth = {};
-    newMonth.totalSnow = Number(month['Total Snow (cm)']);
-    newMonth.Month = +month.Month;
-    newMonth.Year = +month.Year;
-    newMonth.totalRain = Math.round(Number(month['Total Rain (mm)']) / 10);
-    var parseTime = d3.timeParse("%Y-%m");
-    var formatTime = d3.timeFormat("%b");
-    newMonth['MonthText'] = formatTime(parseTime(month['Date/Time']));
-
-    if (!allYears.includes(newMonth.Year)){
-      allYears.push(newMonth.Year);
-    }
-
-    return newMonth;
-  });
-
-  
-  // format data for use in a line graph
-  allYears.forEach(year => {
-    var singleYear = {year: year, values: []};
-
-    var allMonths = formattedData.filter(month => {
-      return month.Year === year;
-    });
-
-    allMonths.forEach(month => {
-      singleYear.values.push({month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain});
-      if (month.totalSnow > maxSnow) maxSnow = month.totalSnow;
-      if (month.totalRain > maxRain) maxRain = month.totalRain;
-      
-    });
-    
-    formattedDataYearly.push(singleYear);
-  });
-
-  updateLineGraph(formattedDataYearly);
-
-});
-
-
-
-// Toggle between rain and snow
-let button2 = document.getElementById("precip-button");
-
-button2.onclick = () => {
-  if (button2.innerHTML == "Snow") {
-    button2.innerHTML = "Rain";
-  }
-  else {
-    button2.innerHTML = "Snow";
-  }
-  flag = !flag;
-
-  updateLineGraph(formattedDataYearly);
-};
-
-
-// Update chart
-function updateLineGraph(data){
-  var toggle = flag ? "totalSnow" : "totalRain";
-  
   /* Adjust Domain */
 
   // Determine y domain
-  var yScaleValue = flag ? maxSnow : maxRain;
+  vis.yScaleValue = flag ? maxSnow : maxRain;
 
-  xScale.domain(d3.extent(data[0].values, d => d.month));
-  yScale.domain([0, yScaleValue]);
+  vis.xScale.domain(d3.extent(vis.data[0].values, d => d.month));
+  vis.yScale.domain([0, vis.yScaleValue]);
 
-  var xAxis = d3.axisBottom(xScale).ticks(12);
+  vis.xAxis = d3.axisBottom(vis.xScale).ticks(12);
 
-  var yAxis = d3.axisLeft(yScale)
+  vis.yAxis = d3.axisLeft(vis.yScale)
     .ticks(5)
     .tickFormat((precipAmount) => {
-      return precipAmount + "cm"
+      return precipAmount + "cm";
     });
 
-  xAxisGroup.call(xAxis);
+  vis.xAxisGroup.call(vis.xAxis);
 
-  yAxisGroup.call(yAxis);
+  vis.yAxisGroup.call(vis.yAxis);
 
- 
-
-
-  var color = d3.scaleOrdinal(d3.schemeCategory10);
+  vis.color = d3.scaleOrdinal(d3.schemeCategory10);
 
   /* Add line into SVG */
-  var line = d3.line()
-    .x(d => xScale(d.month))
-    .y(d => yScale(d[toggle]));  
+  vis.line = d3.line()
+    .x(d => vis.xScale(d.month))
+    .y(d => vis.yScale(d[vis.toggle]));
 
-  let lines = svg.append('g')
+  vis.lines = vis.svg.append('g')
     .attr('class', 'lines');
-
-
 
   d3.selectAll("path.line").remove();
 
   d3.selectAll("g.circle").remove();
 
-  lines.selectAll('.line-group')
-    .data(data).enter()
+  vis.lines.selectAll('.line-group')
+    .data(vis.data).enter()
     .append('g')
-    .attr('class', 'line-group')  
+    .attr('class', 'line-group')
     .on("mouseover", function (d, i) {
-    svg.append("text")
-      .attr("class", "title-text")
-      .style("fill", color(i))
-      .text(d.year)
-      .attr("text-anchor", "middle")
-      .attr("x", width/2)
-      .attr("y", 5);
-  })
+      vis.svg.append("text")
+        .attr("class", "title-text")
+        .style("fill", vis.color(i))
+        .text(d.year)
+        .attr("text-anchor", "middle")
+        .attr("x", vis.width / 2)
+        .attr("y", 5);
+    })
     .on("mouseout", function (d) {
-      svg.select(".title-text").remove();
+      vis.svg.select(".title-text").remove();
     })
     .append("path")
     .attr("class", "line")
-    .attr("d", d => line(d.values))
-    .style('stroke', (d, i) => color(i))
-    .style('opacity', lineOpacity)
+    .attr("d", d => vis.line(d.values))
+    .style('stroke', (d, i) => vis.color(i))
+    .style('opacity', vis.lineOpacity)
 
-
-    
-   
     .on("mouseover", function (d) {
       d3.selectAll('.line')
-        .style('opacity', otherLinesOpacityHover);
+        .style('opacity', vis.otherLinesOpacityHover);
       d3.selectAll('.circle')
-        .style('opacity', circleOpacityOnLineHover);
+        .style('opacity', vis.circleOpacityOnLineHover);
       d3.select(this)
-        .style('opacity', lineOpacityHover)
-        .style("stroke-width", lineStrokeHover)
+        .style('opacity', vis.lineOpacityHover)
+        .style("stroke-width", vis.lineStrokeHover)
         .style("cursor", "pointer");
     })
     .on("mouseout", function (d) {
       d3.selectAll(".line")
-        .style('opacity', lineOpacity);
+        .style('opacity', vis.lineOpacity);
       d3.selectAll('.circle')
-        .style('opacity', circleOpacity);
+        .style('opacity', vis.circleOpacity);
       d3.select(this)
-        .style("stroke-width", lineStroke)
+        .style("stroke-width", vis.lineStroke)
         .style("cursor", "none");
     });
 
 
   /* Add circles in the line */
-  lines.selectAll("circle-group")
-    .data(data).enter()
+  vis.lines.selectAll("circle-group")
+    .data(vis.data).enter()
     .append("g")
-    .style("fill", (d, i) => color(i))
+    .style("fill", (d, i) => vis.color(i))
     .selectAll("circle")
     .data(d => d.values).enter()
     .append("g")
@@ -255,35 +177,35 @@ function updateLineGraph(data){
         .style("cursor", "pointer")
         .append("text")
         .attr("class", "text")
-        .text(`${d[toggle]}`)
-        .attr("x", d => xScale(d.month) + 5)
-        .attr("y", d => yScale(d[toggle]) - 10);
+        .text(`${d[vis.toggle]}`)
+        .attr("x", d => vis.xScale(d.month) + 5)
+        .attr("y", d => vis.yScale(d[vis.toggle]) - 10);
     })
     .on("mouseout", function (d) {
       d3.select(this)
         .style("cursor", "none")
         .transition()
-        .duration(duration)
+        .duration(vis.duration)
         .selectAll(".text").remove();
     })
     .append("circle")
-    .attr("cx", d => xScale(d.month))
-    .attr("cy", d => yScale(d[toggle]))
-    .attr("r", circleRadius)
-    .style('opacity', circleOpacity)
+    .attr("cx", d => vis.xScale(d.month))
+    .attr("cy", d => vis.yScale(d[vis.toggle]))
+    .attr("r", vis.circleRadius)
+    .style('opacity', vis.circleOpacity)
     .on("mouseover", function (d) {
       d3.select(this)
         .transition()
-        .duration(duration)
-        .attr("r", circleRadiusHover);
+        .duration(vis.duration)
+        .attr("r", vis.circleRadiusHover);
     })
     .on("mouseout", function (d) {
       d3.select(this)
         .transition()
-        .duration(duration)
-        .attr("r", circleRadius);
+        .duration(vis.duration)
+        .attr("r", vis.circleRadius);
     });
 
-  var label = flag ? "Total Snow Fall" : "Total Rain Fall";
-  yLabel.text(label);
-}
+  vis.label = flag ? "Total Snow Fall" : "Total Rain Fall";
+  vis.yLabel.text(vis.label);
+};
