@@ -1,7 +1,7 @@
 // Constructor to create a new visualization?
-BarChart = function(_parentElement, data){
+BarChart = function(_parentElement, _data){
   this.parentElement = _parentElement;
-  this.data = data;
+  this.data = _data;
   this.initVis();
 };
 
