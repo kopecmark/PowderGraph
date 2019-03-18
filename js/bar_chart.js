@@ -3,7 +3,7 @@ BarChart = function(_parentElement, data){
   this.parentElement = _parentElement;
   this.data = data;
   this.initVis();
-}
+};
 
 // Method to set up static parts of the visualization
 BarChart.prototype.initVis = function(){
@@ -29,11 +29,11 @@ BarChart.prototype.initVis = function(){
 
   vis.xAxisGroup = vis.g.append("g")
     .attr("class", "x-axis")
-    .attr("transform", "translate(0, " + vis.height + ")")
+    .attr("transform", "translate(0, " + vis.height + ")");
 
 
   vis.yAxisGroup = vis.g.append("g")
-    .attr("class", "y-axis")
+    .attr("class", "y-axis");
 
   // Tooltip
   vis.tip = d3.tip().attr('class', 'd3-tip')
@@ -50,10 +50,10 @@ BarChart.prototype.initVis = function(){
   // Scale the axis
   vis.x = d3.scaleBand()
     .range([0, vis.width])
-    .padding(0.2)
+    .padding(0.2);
 
   vis.y = d3.scaleLinear()
-    .range([vis.height, 0])
+    .range([vis.height, 0]);
 
 
   // X Label Name
@@ -98,7 +98,7 @@ BarChart.prototype.updateVis = function(){
 
   vis.x.domain(vis.data.map((month) => {
     return month['Date/Time'];
-  }))
+  }));
 
 
   vis.y.domain([0, vis.max]);
@@ -111,7 +111,7 @@ BarChart.prototype.updateVis = function(){
   vis.yAxisCall = d3.axisLeft(vis.y)
     .ticks(10)
     .tickFormat((snowLevel) => {
-      return snowLevel + "cm"
+      return snowLevel + "cm";
     });
 
   vis.xAxisGroup.transition(vis.t).call(vis.xAxisCall)
