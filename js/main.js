@@ -21,7 +21,7 @@ BarChart.prototype.initVis = function(){
 
   var t = d3.transition().duration(750);
 
-  var g = d3.select("#chart-area-bar")
+  var g = d3.select(vis.parent)
     .append("div")
     .classed("svg-container", true) //container class to make it responsive
     .append("svg")
