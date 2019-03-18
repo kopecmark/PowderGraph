@@ -79,7 +79,9 @@ BarChart.prototype.initVis = function(){
 // Method for filtering/selecting the data to be used
 BarChart.prototype.wrangleData = function(filteredData){
   var vis = this;
-  data = filteredData;
+  if (filteredData){
+    vis.data = filteredData;
+  }
 
   vis.updateVis();
 
