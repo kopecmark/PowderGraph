@@ -1,3 +1,32 @@
+// Constructor to create a new visualization?
+BarChart = function(_parentElement){
+  this.parentElement = _parentElement;
+
+  this.initVis();
+}
+
+// Method to set up static parts of the visualization
+BarChart.prototype.initVis = function(){
+  var vis = this;
+
+  vis.wrangleData();
+}
+
+// Method for filtering/selecting the data to be used
+BarChart.prototype.wrangleData = function(){
+  var vis = this;
+
+  vis.updateVis();
+
+}
+
+// Method to update elements to match the new data
+BarChart.prototype.updateVis = function(){
+  var vis = this;
+
+}
+
+
 // Table Setup
 var margin = { left: 100, right: 10, top: 10, bottom: 100 }
 
