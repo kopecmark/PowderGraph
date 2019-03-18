@@ -9,31 +9,31 @@ LineChart = function (_parentElement, _data) {
 
 // Method to set up static parts of the visualization
 LineChart.prototype.initVis = function () {
-  var vis = this;
+  var lineVis = this;
 
   // Table variables
-  vis.margin = { left: 100, right: 50, top: 50, bottom: 100 }
-  vis.margin = { left: 100, right: 50, top: 50, bottom: 100 }
-  vis.width = 1000 - vis.margin.left - vis.margin.right;
-  vis.width = 1000 - vis.margin.left - vis.margin.right;
-  vis.height = 500 - vis.margin.top - vis.margin.bottom;
-  vis.height = 500 - vis.margin.top - vis.margin.bottom;
-  vis.duration = 300;
-  vis.duration = 300;
+  lineVis.margin = { left: 100, right: 50, top: 50, bottom: 100 }
+  lineVis.margin = { left: 100, right: 50, top: 50, bottom: 100 }
+  lineVis.width = 1000 - lineVis.margin.left - lineVis.margin.right;
+  lineVis.width = 1000 - lineVis.margin.left - lineVis.margin.right;
+  lineVis.height = 500 - lineVis.margin.top - lineVis.margin.bottom;
+  lineVis.height = 500 - lineVis.margin.top - lineVis.margin.bottom;
+  lineVis.duration = 300;
+  lineVis.duration = 300;
 
-  vis.lineOpacity = "0.25";
-  vis.lineOpacityHover = "0.85";
-  vis.otherLinesOpacityHover = "0.1";
-  vis.lineStroke = "3.5px";
-  vis.lineStrokeHover = "4.5px";
+  lineVis.lineOpacity = "0.25";
+  lineVis.lineOpacityHover = "0.85";
+  lineVis.otherLinesOpacityHover = "0.1";
+  lineVis.lineStroke = "3.5px";
+  lineVis.lineStrokeHover = "4.5px";
 
-  vis.circleOpacity = '0.85';
-  vis.circleOpacityOnLineHover = "0.25";
-  vis.circleRadius = 3;
-  vis.circleRadiusHover = 6;
+  lineVis.circleOpacity = '0.85';
+  lineVis.circleOpacityOnLineHover = "0.25";
+  lineVis.circleRadius = 3;
+  lineVis.circleRadiusHover = 6;
 
   /* Add SVG */
-  vis.svg = d3.select("#chart-area-line")
+  lineVis.svg = d3.select("#chart-area-line")
     .append("div")
     .classed("svg-container", true) //container class to make it responsive
     .append("svg")
@@ -41,133 +41,133 @@ LineChart.prototype.initVis = function () {
     .attr("viewBox", "0 0 1000 500")
     .classed("svg-content-responsive", true)
     .append("g")
-    .attr("transform", "translate(" + vis.margin.left + ", " + vis.margin.top + ")")
+    .attr("transform", "translate(" + lineVis.margin.left + ", " + lineVis.margin.top + ")")
 
   /* Scale Axis */
-  vis.xScale = d3.scaleTime()
-    .range([0, vis.width]);
+  lineVis.xScale = d3.scaleTime()
+    .range([0, lineVis.width]);
 
-  vis.yScale = d3.scaleLinear()
-    .range([vis.height, 0]);
+  lineVis.yScale = d3.scaleLinear()
+    .range([lineVis.height, 0]);
 
   /* Add Axis into SVG */
 
-  vis.xAxisGroup = vis.svg.append("g")
+  lineVis.xAxisGroup = lineVis.svg.append("g")
     .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${vis.height})`)
+    .attr("transform", `translate(0, ${lineVis.height})`)
 
 
-  vis.yAxisGroup = vis.svg.append("g")
+  lineVis.yAxisGroup = lineVis.svg.append("g")
     .attr("class", "y-axis")
 
-  vis.yLabel = vis.svg.append("text")
-    .attr("x", - (vis.height / 2))
+  lineVis.yLabel = lineVis.svg.append("text")
+    .attr("x", - (lineVis.height / 2))
     .attr("y", -60)
     .attr("font-size", "15px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
 
-  vis.wrangleData();
+  lineVis.wrangleData();
 };
 
 // Method for filtering/selecting the data to be used
 LineChart.prototype.wrangleData = function (filteredData) {
-  var vis = this;
+  var lineVis = this;
   if (filteredData) {
-    vis.data = filteredData;
+    lineVis.data = filteredData;
   }
 
-  vis.updateVis();
+  lineVis.updateVis();
 
 };
 
 LineChart.prototype.updateVis = function () {
-  var vis = this;
+  var lineVis = this;
 
-  vis.toggle = flag ? "totalSnow" : "totalRain";
+  lineVis.toggle = flag ? "totalSnow" : "totalRain";
 
   /* Adjust Domain */
 
   // Determine y domain
-  vis.yScaleValue = flag ? maxSnow : maxRain;
+  lineVis.yScaleValue = flag ? maxSnow : maxRain;
 
-  vis.xScale.domain(d3.extent(vis.data[0].values, d => d.month));
-  vis.yScale.domain([0, vis.yScaleValue]);
+  lineVis.xScale.domain(d3.extent(lineVis.data[0].values, d => d.month));
+  lineVis.yScale.domain([0, lineVis.yScaleValue]);
 
-  vis.xAxis = d3.axisBottom(vis.xScale).ticks(12);
+  lineVis.xAxis = d3.axisBottom(lineVis.xScale).ticks(12);
 
-  vis.yAxis = d3.axisLeft(vis.yScale)
+  lineVis.yAxis = d3.axisLeft(lineVis.yScale)
     .ticks(5)
     .tickFormat((precipAmount) => {
       return precipAmount + "cm";
     });
 
-  vis.xAxisGroup.call(vis.xAxis);
+  lineVis.xAxisGroup.call(lineVis.xAxis);
 
-  vis.yAxisGroup.call(vis.yAxis);
+  lineVis.yAxisGroup.call(lineVis.yAxis);
 
-  vis.color = d3.scaleOrdinal(d3.schemeCategory10);
+  lineVis.color = d3.scaleOrdinal(d3.schemeCategory10);
 
   /* Add line into SVG */
-  vis.line = d3.line()
-    .x(d => vis.xScale(d.month))
-    .y(d => vis.yScale(d[vis.toggle]));
+  lineVis.line = d3.line()
+    .x(d => lineVis.xScale(d.month))
+    .y(d => lineVis.yScale(d[lineVis.toggle]));
 
-  vis.lines = vis.svg.append('g')
+  lineVis.lines = lineVis.svg.append('g')
     .attr('class', 'lines');
 
   d3.selectAll("path.line").remove();
 
   d3.selectAll("g.circle").remove();
 
-  vis.lines.selectAll('.line-group')
-    .data(vis.data).enter()
+  lineVis.lines.selectAll('.line-group')
+    .data(lineVis.data).enter()
     .append('g')
     .attr('class', 'line-group')
     .on("mouseover", function (d, i) {
-      vis.svg.append("text")
+      lineVis.svg.append("text")
         .attr("class", "title-text")
-        .style("fill", vis.color(i))
+        .style("fill", lineVis.color(i))
         .text(d.year)
         .attr("text-anchor", "middle")
-        .attr("x", vis.width / 2)
+        .attr("x", lineVis.width / 2)
         .attr("y", 5);
     })
     .on("mouseout", function (d) {
-      vis.svg.select(".title-text").remove();
+      lineVis.svg.select(".title-text").remove();
     })
     .append("path")
     .attr("class", "line")
-    .attr("d", d => vis.line(d.values))
-    .style('stroke', (d, i) => vis.color(i))
-    .style('opacity', vis.lineOpacity)
+    .attr("d", d => lineVis.line(d.values))
+    .style('stroke', (d, i) => lineVis.color(i))
+    .style('opacity', lineVis.lineOpacity)
 
     .on("mouseover", function (d) {
       d3.selectAll('.line')
-        .style('opacity', vis.otherLinesOpacityHover);
+        .style('opacity', lineVis.otherLinesOpacityHover);
       d3.selectAll('.circle')
-        .style('opacity', vis.circleOpacityOnLineHover);
+        .style('opacity', lineVis.circleOpacityOnLineHover);
       d3.select(this)
-        .style('opacity', vis.lineOpacityHover)
-        .style("stroke-width", vis.lineStrokeHover)
+        .style('opacity', lineVis.lineOpacityHover)
+        .style("stroke-width", lineVis.lineStrokeHover)
         .style("cursor", "pointer");
     })
     .on("mouseout", function (d) {
       d3.selectAll(".line")
-        .style('opacity', vis.lineOpacity);
+        .style('opacity', lineVis.lineOpacity);
       d3.selectAll('.circle')
-        .style('opacity', vis.circleOpacity);
+        .style('opacity', lineVis.circleOpacity);
       d3.select(this)
-        .style("stroke-width", vis.lineStroke)
+        .style("stroke-width", lineVis.lineStroke)
         .style("cursor", "none");
     });
 
 
   /* Add circles in the line */
-  vis.lines.selectAll("circle-group")
-    .data(vis.data).enter()
+  lineVis.lines.selectAll("circle-group")
+    .data(lineVis.data).enter()
     .append("g")
-    .style("fill", (d, i) => vis.color(i))
+    .style("fill", (d, i) => lineVis.color(i))
     .selectAll("circle")
     .data(d => d.values).enter()
     .append("g")
@@ -177,35 +177,35 @@ LineChart.prototype.updateVis = function () {
         .style("cursor", "pointer")
         .append("text")
         .attr("class", "text")
-        .text(`${d[vis.toggle]}`)
-        .attr("x", d => vis.xScale(d.month) + 5)
-        .attr("y", d => vis.yScale(d[vis.toggle]) - 10);
+        .text(`${d[lineVis.toggle]}`)
+        .attr("x", d => lineVis.xScale(d.month) + 5)
+        .attr("y", d => lineVis.yScale(d[lineVis.toggle]) - 10);
     })
     .on("mouseout", function (d) {
       d3.select(this)
         .style("cursor", "none")
         .transition()
-        .duration(vis.duration)
+        .duration(lineVis.duration)
         .selectAll(".text").remove();
     })
     .append("circle")
-    .attr("cx", d => vis.xScale(d.month))
-    .attr("cy", d => vis.yScale(d[vis.toggle]))
-    .attr("r", vis.circleRadius)
-    .style('opacity', vis.circleOpacity)
+    .attr("cx", d => lineVis.xScale(d.month))
+    .attr("cy", d => lineVis.yScale(d[lineVis.toggle]))
+    .attr("r", lineVis.circleRadius)
+    .style('opacity', lineVis.circleOpacity)
     .on("mouseover", function (d) {
       d3.select(this)
         .transition()
-        .duration(vis.duration)
-        .attr("r", vis.circleRadiusHover);
+        .duration(lineVis.duration)
+        .attr("r", lineVis.circleRadiusHover);
     })
     .on("mouseout", function (d) {
       d3.select(this)
         .transition()
-        .duration(vis.duration)
-        .attr("r", vis.circleRadius);
+        .duration(lineVis.duration)
+        .attr("r", lineVis.circleRadius);
     });
 
-  vis.label = flag ? "Total Snow Fall" : "Total Rain Fall";
-  vis.yLabel.text(vis.label);
+  lineVis.label = flag ? "Total Snow Fall" : "Total Rain Fall";
+  lineVis.yLabel.text(lineVis.label);
 };
