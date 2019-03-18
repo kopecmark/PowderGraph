@@ -13,9 +13,6 @@ var maxRain = 0;
 var margin = { left: 100, right: 50, top: 50, bottom: 100 }
 var width = 1000 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
-// var width = 500;
-// var height = 300;
-// var margin = 50;
 var duration = 300;
 
 var lineOpacity = "0.25";
