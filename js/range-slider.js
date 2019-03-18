@@ -6,6 +6,5 @@ noUiSlider.create(slider, {
   range: {
     'min': 0,
     'max': 100
-  }, 
-  tooltips: [false, wNumb({ decimals: 1 }), true],
+  }
 });
