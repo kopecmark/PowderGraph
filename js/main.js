@@ -26,7 +26,6 @@ d3.csv("data/ll_monthly_snow.csv").then(function(data){
 
   barChart = new BarChart("#chart-area-bar", selectedData);
 
-  // update(selectedData);
 })
 
 // Function to switch between snow and rain
