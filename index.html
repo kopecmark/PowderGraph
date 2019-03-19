@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="css/d3-tip.css">
   <link rel="stylesheet" href="css/nouislider.min.css">
   <link rel="stylesheet" href="css/slider.css">
-  <link rel="stylesheet" href="css/range-slider.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="shortcut icon" type="image/png" href="favicon.ico" />
 </head>
@@ -36,12 +35,8 @@
         <div class="button-container">
           <button id="precip-button">Rain</button>
         </div>
-      
-        <div class="slide-container">
-          
-          <input type="range" min="1919" max="2007" value="1" class="slider" id="singleYear">
-          <span id="year">1919</span>
-          
+
+        <div id="slider">
         </div>
 
         <div id="range-slider">
@@ -74,7 +69,7 @@
     <script src="https://d3js.org/d3-axis.v1.min.js"></script>
     <script src="js/wNumb.js"></script>
     <script src="js/nouislider.min.js"></script>
-    <script src="js/range-slider.js"></script>
+    <script src="js/slider.js"></script>
 
     <!-- Custom JS -->
     <script src="js/line-chart.js"></script>
