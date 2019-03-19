@@ -79,35 +79,21 @@ button.onclick = () => {
 };
 
 
-// Slider
-let slider = document.getElementById("singleYear");
-let output = document.getElementById("year");
-output.innerHTML = slider.value; // Display the default slider value
+// Update bar chart using the slider
+let sliderElement = document.getElementById('slider-value');
 
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function () {
-  output.innerHTML = this.value;
-  year = Number(this.value);
-};
-
-slider.onchange = function () {
-  output.innerHTML = this.value;
-  year = Number(this.value);
+slider.noUiSlider.on('change', yearValue => {
   let selectedData = formattedData.filter((d) => {
-    return d.Year === year;
+    return d.Year === parseInt(yearValue[0]);
   });
   barChart.wrangleData(selectedData);
-};
+});
 
 // Update the line chart using range slider input 
 
-let rangeSliderElement = document.getElementById('range-slider-value');
-
 rangeSlider.noUiSlider.on('change', yearValues => {
-  [yearValues[0], yearValues[1]] = [parseInt(yearValues[0]), parseInt(yearValues[1])];
-
-  selectedData = formattedDataYearly.filter((d) => {
-    return d.year >= yearValues[0] && d.year <= yearValues[1];
+  let selectedData = formattedDataYearly.filter((d) => {
+    return d.year >= parseInt(yearValues[0]) && d.year <= parseInt(yearValues[1]);
   });
 
   lineChart.wrangleData(selectedData);
