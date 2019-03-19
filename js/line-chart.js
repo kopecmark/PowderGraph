@@ -54,18 +54,18 @@ LineChart.prototype.initVis = function () {
 
   lineVis.xAxisGroup = lineVis.svg.append("g")
     .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${lineVis.height})`)
+    .attr("transform", `translate(0, ${lineVis.height})`);
 
 
   lineVis.yAxisGroup = lineVis.svg.append("g")
-    .attr("class", "y-axis")
+    .attr("class", "y-axis");
 
   lineVis.yLabel = lineVis.svg.append("text")
     .attr("x", - (lineVis.height / 2))
     .attr("y", -60)
     .attr("font-size", "15px")
     .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
+    .attr("transform", "rotate(-90)");
 
   lineVis.wrangleData();
 };
