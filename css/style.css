@@ -79,11 +79,9 @@ header, footer, article, nav, div {
   align-items: center;
   }
 
-/* .controllers{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
+.controllers > div {
+  margin-top: 100px;
+}
 
 .site-description { 
   grid-area: desc; 
