@@ -7,6 +7,8 @@ var formattedDataYearly = [];
 var allYears = [];
 var maxSnow = 0;
 var maxRain = 0;
+var selectedDataLineChart;
+var selectedDataBarChart;
 
 d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   formattedData = data.map((month) => {
@@ -38,7 +40,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     });
 
     allMonths.forEach(month => {
-      singleYear.values.push({ month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain });
+      singleYear.values.push({ month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain, MonthText: month['MonthText'] });
       if (month.totalSnow > maxSnow) maxSnow = month.totalSnow;
       if (month.totalRain > maxRain) maxRain = month.totalRain;
 
@@ -70,27 +72,33 @@ button.onclick = () => {
   }
   flag = !flag;
 
-  selectedData = formattedData.filter((d) => {
-    return d.Year === year;
+  selectedDataBarChart = formattedData.filter((d) => {
+    return d.Year === parseInt(slider.noUiSlider.get());
   });
 
-  lineChart.wrangleData(formattedDataYearly);
-  barChart.wrangleData(selectedData);
+  console.log(selectedDataLineChart)
+  if (selectedDataLineChart) {
+    lineChart.wrangleData(selectedDataLineChart);
+  } else {
+    lineChart.wrangleData(formattedDataYearly);
+  }
+  
+  barChart.wrangleData(selectedDataBarChart);
 };
 
 
 // Update bar chart using the slider
 slider.noUiSlider.on('change', yearValue => {
-  let selectedData = formattedData.filter((d) => {
+  selectedDataBarChart = formattedData.filter((d) => {
     return d.Year === parseInt(yearValue[0]);
   });
-  barChart.wrangleData(selectedData);
+  barChart.wrangleData(selectedDataBarChart);
 });
 
 // Update the line chart using range slider input 
 rangeSlider.noUiSlider.on('change', yearValues => {
-  let selectedData = formattedDataYearly.filter((d) => {
+  selectedDataLineChart = formattedDataYearly.filter((d) => {
     return d.year >= parseInt(yearValues[0]) && d.year <= parseInt(yearValues[1]);
   });
-  lineChart.wrangleData(selectedData);
+  lineChart.wrangleData(selectedDataLineChart);
 });
