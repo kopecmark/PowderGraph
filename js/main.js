@@ -76,13 +76,12 @@ button.onclick = () => {
     return d.Year === parseInt(slider.noUiSlider.get());
   });
 
-  console.log(selectedDataLineChart)
   if (selectedDataLineChart) {
     lineChart.wrangleData(selectedDataLineChart);
   } else {
     lineChart.wrangleData(formattedDataYearly);
   }
-  
+
   barChart.wrangleData(selectedDataBarChart);
 };
 
