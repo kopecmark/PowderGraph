@@ -157,7 +157,7 @@ BarChart.prototype.updateVis = function(){
     .attr("y", (m) => { return vis.y(m[vis.value]) })
     .attr("height", (m) => { return vis.height - vis.y(m[vis.value]); })
 
-  vis.label = flag ? "Snow" : "Rain";
+  vis.label = flag ? "Total Snow Fall" : "Total Rain Fall";
 
   vis.yLabel.text(vis.label);
 
