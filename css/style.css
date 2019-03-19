@@ -1,39 +1,3 @@
-.slidecontainer {
-  width: 100%;
-}
-
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 25px;
-  background: #B0DDEE;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-  min-width: 150px;
-}
-
-.slider:hover {
-  opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #1C7192;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #1C7192;
-  cursor: pointer;
-}
-
 #precip-button {
 	background-color:#1c7192;
 	-moz-border-radius:28px;
@@ -58,9 +22,6 @@
 	position:relative;
 	top:1px;
 }
-
-
-
 
 body { 
   display: grid;
@@ -139,13 +100,6 @@ header, footer, article, nav, div {
   padding: 15px;
   background: #54A1BF;
 
-}
-
-#year{
-  display: flex;
-  justify-content: center;
-  font-size: 18px;
-  padding: 10px;
 }
 
 /* Stack the layout on small devices/viewports. */
