@@ -80,8 +80,6 @@ button.onclick = () => {
 
 
 // Update bar chart using the slider
-let sliderElement = document.getElementById('slider-value');
-
 slider.noUiSlider.on('change', yearValue => {
   let selectedData = formattedData.filter((d) => {
     return d.Year === parseInt(yearValue[0]);
@@ -90,11 +88,9 @@ slider.noUiSlider.on('change', yearValue => {
 });
 
 // Update the line chart using range slider input 
-
 rangeSlider.noUiSlider.on('change', yearValues => {
   let selectedData = formattedDataYearly.filter((d) => {
     return d.year >= parseInt(yearValues[0]) && d.year <= parseInt(yearValues[1]);
   });
-
   lineChart.wrangleData(selectedData);
 });
