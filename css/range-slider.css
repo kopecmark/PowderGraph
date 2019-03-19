@@ -41,13 +41,6 @@
 }
 .noUi-base .noUi-handle::before {
     background: transparent;
-    /* content: attr(data-value); */
-    display: table-cell;
-    /* font-size: 8px; */
-    /* font-weight: 100; */
-    position: static;
-    width: 100%;
-    vertical-align: middle;
 }
 .noUi-base .noUi-handle::after {
     display: none;
