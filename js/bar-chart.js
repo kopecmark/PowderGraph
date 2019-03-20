@@ -97,15 +97,19 @@ BarChart.prototype.updateVis = function(){
   })
 
   vis.x.domain(vis.data.map((month) => {
-    return month['MonthText'];
+    return month.monthText;
   }));
 
 
   vis.y.domain([0, vis.max]);
 
   // X axis
+  var formatTime = d3.timeFormat("%b");
   vis.xAxisCall = d3.axisBottom(vis.x)
-    .ticks(5);
+    .ticks(5)
+    .tickFormat((month) => {
+      return formatTime(month);
+    });
 
   // Y axis
   vis.yAxisCall = d3.axisLeft(vis.y)
@@ -136,7 +140,7 @@ BarChart.prototype.updateVis = function(){
 
   // UPDATE old elements present in new data
   vis.rect.transition(vis.t)
-    .attr("x", (m) => { return vis.x(m['MonthText']) })
+    .attr("x", (m) => { return vis.x(m.monthText) })
     .attr("y", (m) => { return vis.y(m[vis.value]) })
     .attr("width", vis.x.bandwidth)
     .attr("height", (m) => { return vis.height - vis.y(m[vis.value]); })
@@ -144,7 +148,7 @@ BarChart.prototype.updateVis = function(){
 
   vis.rect.enter()
     .append("rect")
-    .attr("x", (m) => { return vis.x(m['MonthText']) })
+    .attr("x", (m) => { return vis.x(m.monthText) })
     .attr("width", vis.x.bandwidth)
     .attr("fill", d3.rgb("#1C7192"))
     .attr("y", vis.y(0))
