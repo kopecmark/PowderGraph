@@ -28,7 +28,7 @@ body {
   grid-template-areas: 
     "nav header desc"
     "nav article desc";
-  grid-template-rows: 80px minmax(min-content, 2fr) 1fr;  
+  grid-template-rows: 1fr minmax(min-content, 2fr);  
   grid-template-columns: 1fr minmax(min-content, 3fr) 1.5fr;
   height: 100vh;
   margin: 0;
@@ -73,15 +73,17 @@ header, footer, article, nav, div {
 
 .profile-links {
   grid-area: nav;
-  justify-self: center;
   text-decoration: none;
   margin-top: auto;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
   }
 
 .profile-links img{
-  width: 100px;
+  width: 75px;
   height: auto;
+  
 }
 
 .site-description { 
@@ -109,7 +111,7 @@ header, footer, article, nav, div {
       "article"
       "nav"
       "footer";
-    grid-template-rows: 80px 1fr 70px 1fr 70px;  
+    grid-template-rows: 80px 1fr 70px 1fr;  
     grid-template-columns: 1fr;
  }
 }
