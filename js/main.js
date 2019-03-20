@@ -32,13 +32,14 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   // format data for use in a line graph
   allYears.forEach(year => {
     var singleYear = { year: year, values: [] };
+    var parseTime = d3.timeParse("%m");
 
     var allMonths = formattedData.filter(month => {
       return month.Year === year;
     });
 
     allMonths.forEach(month => {
-      singleYear.values.push({ month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain, monthText: month.monthText });
+      singleYear.values.push({ month: parseTime(month.Month), totalSnow: month.totalSnow, totalRain: month.totalRain, monthText: month.monthText });
       if (month.totalSnow > maxSnow) maxSnow = month.totalSnow;
       if (month.totalRain > maxRain) maxRain = month.totalRain;
 

@@ -91,20 +91,15 @@ LineChart.prototype.updateVis = function () {
   // Determine y domain
   lineVis.yScaleValue = flag ? maxSnow : maxRain;
 
-  var parseTime = d3.timeParse("%m");
-  var formatTime = d3.timeFormat("%b");
-  lineVis.xScale.domain(d3.extent(lineVis.data[0].values, d => {
-    return parseTime(d.month);
-  }));
-
-  lineVis.yScale.domain([0, lineVis.yScaleValue]);
-
+  lineVis.xScale.domain(d3.extent(lineVis.data[0].values, d => d.month));
   
+  lineVis.yScale.domain([0, lineVis.yScaleValue]);
+  
+  
+  var formatTime = d3.timeFormat("%b");
   lineVis.xAxis = d3.axisBottom(lineVis.xScale)
     .ticks(12)
-    .tickFormat((month) => {
-      return formatTime(month);
-    });
+    .tickFormat((month) => formatTime(month));
 
   lineVis.yAxis = d3.axisLeft(lineVis.yScale)
     .ticks(5)
@@ -120,7 +115,7 @@ LineChart.prototype.updateVis = function () {
 
   /* Add line into SVG */
   lineVis.line = d3.line()
-    .x(d => lineVis.xScale(parseTime(d.month)))
+    .x(d => lineVis.xScale(d.month))
     .y(d => lineVis.yScale(d[lineVis.toggle]));
 
   lineVis.lines = lineVis.svg.append('g')
@@ -188,7 +183,7 @@ LineChart.prototype.updateVis = function () {
         .append("text")
         .attr("class", "text")
         .text(`${d[lineVis.toggle]}`)
-        .attr("x", d => lineVis.xScale(parseTime(d.month)) + 5)
+        .attr("x", d => lineVis.xScale(d.month) + 5)
         .attr("y", d => lineVis.yScale(d[lineVis.toggle]) - 10);
     })
     .on("mouseout", function (d) {
@@ -199,7 +194,7 @@ LineChart.prototype.updateVis = function () {
         .selectAll(".text").remove();
     })
     .append("circle")
-    .attr("cx", d => lineVis.xScale(parseTime(d.month)))
+    .attr("cx", d => lineVis.xScale(d.month))
     .attr("cy", d => lineVis.yScale(d[lineVis.toggle]))
     .attr("r", lineVis.circleRadius)
     .style('opacity', lineVis.circleOpacity)
