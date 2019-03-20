@@ -52,7 +52,6 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   selectedData = formattedData.filter((d) => {
     return d.Year === parseInt(slider.noUiSlider.get());
   });
-  console.log(formattedDataYearly)
   // Create line and bar chart
   lineChart = new LineChart("#chart-area-line", formattedDataYearly);
   barChart = new BarChart("#chart-area-bar", selectedData);
