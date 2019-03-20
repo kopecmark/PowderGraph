@@ -27,12 +27,9 @@ body {
   display: grid;
   grid-template-areas: 
     "nav header desc"
-    "nav article desc"
-    "nav footer desc";
+    "nav article desc";
   grid-template-rows: 80px minmax(min-content, 2fr) 1fr;  
   grid-template-columns: 1fr minmax(min-content, 3fr) 1.5fr;
-  /* grid-row-gap: 10px; */
-  /* grid-column-gap: 10px; */
   height: 100vh;
   margin: 0;
   
@@ -53,14 +50,14 @@ header, footer, article, nav, div {
   text-align: center;
   }
 
-.pageFooter {
+.profile-links {
   grid-area: footer;
   align-self: center;
   justify-self: center;
   text-decoration: none;
   }
 
-.pageFooter img{
+.profile-links img{
   width: 100px;
   height: auto;
   
