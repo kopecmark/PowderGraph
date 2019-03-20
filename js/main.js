@@ -1,6 +1,5 @@
 var flag = true;
 var formattedData;
-var year = 1919;
 var barChart;
 var lineChart;
 var formattedDataYearly = [];
@@ -19,7 +18,6 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     newMonth.Year = +month.Year;
     newMonth.totalRain = Math.round(Number(month['Total Rain (mm)']) / 10);
     var parseTime = d3.timeParse("%Y-%m");
-    var formatTime = d3.timeFormat("%b");
     newMonth.monthText = parseTime(month['Date/Time']);
 
     // Develop an array that includes all years available in the data
@@ -51,7 +49,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
   
   // Parse data for a single year
   selectedData = formattedData.filter((d) => {
-    return d.Year === 1919;
+    return d.Year === parseInt(slider.noUiSlider.get());
   });
   console.log(formattedDataYearly)
   // Create line and bar chart
