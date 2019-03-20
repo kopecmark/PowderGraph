@@ -20,7 +20,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     newMonth.totalRain = Math.round(Number(month['Total Rain (mm)']) / 10);
     var parseTime = d3.timeParse("%Y-%m");
     var formatTime = d3.timeFormat("%b");
-    newMonth['MonthText'] = formatTime(parseTime(month['Date/Time']));
+    newMonth.monthText = parseTime(month['Date/Time']);
 
     // Develop an array that includes all years available in the data
     if (!allYears.includes(newMonth.Year)) {
@@ -40,7 +40,7 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
     });
 
     allMonths.forEach(month => {
-      singleYear.values.push({ month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain, MonthText: month['MonthText'] });
+      singleYear.values.push({ month: month.Month, totalSnow: month.totalSnow, totalRain: month.totalRain, monthText: month.monthText });
       if (month.totalSnow > maxSnow) maxSnow = month.totalSnow;
       if (month.totalRain > maxRain) maxRain = month.totalRain;
 

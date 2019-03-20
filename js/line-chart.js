@@ -92,9 +92,11 @@ LineChart.prototype.updateVis = function () {
   lineVis.yScaleValue = flag ? maxSnow : maxRain;
 
   lineVis.xScale.domain(d3.extent(lineVis.data[0].values, d => d.month));
+
   lineVis.yScale.domain([0, lineVis.yScaleValue]);
 
-  lineVis.xAxis = d3.axisBottom(lineVis.xScale).ticks(12);
+  lineVis.xAxis = d3.axisBottom(lineVis.xScale)
+    .ticks(12);
 
   lineVis.yAxis = d3.axisLeft(lineVis.yScale)
     .ticks(5)
