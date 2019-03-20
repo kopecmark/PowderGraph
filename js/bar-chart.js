@@ -55,16 +55,6 @@ BarChart.prototype.initVis = function(){
   vis.y = d3.scaleLinear()
     .range([vis.height, 0]);
 
-
-  // X Label Name
-  vis.g.append("text")
-    // .attr("class", "x axis-label")
-    .attr("x", vis.width / 2)
-    .attr("y", vis.height + 80)
-    .attr("font-size", "15px")
-    .attr("text-anchor", "middle")
-    .text("Months");
-
   // Y Label Name
   vis.yLabel = vis.g.append("text")
     .attr("x", - (vis.height / 2))
