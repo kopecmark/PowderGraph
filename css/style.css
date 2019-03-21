@@ -34,6 +34,8 @@ body {
   grid-template-columns: 1fr minmax(min-content, 3fr) 1.5fr;
   height: 100vh;
   margin: 0;
+  font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+  line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
   
   }  
   
@@ -109,7 +111,6 @@ header, footer, article, nav, div {
 .site-description p {
   border: 4px solid #1C7192;
   border-radius: 26px;
-  font-size: 25px;
   padding: 15px;
   background: #54A1BF;
 }
