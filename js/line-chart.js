@@ -106,7 +106,12 @@ LineChart.prototype.updateVis = function () {
       return precipAmount + "cm";
     });
 
-  lineVis.xAxisGroup.call(lineVis.xAxis);
+  lineVis.xAxisGroup.call(lineVis.xAxis)
+    .selectAll("text")
+    .attr("y", "10")
+    .attr("x", "-5")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-40)");
 
   lineVis.yAxisGroup.call(lineVis.yAxis);
 
