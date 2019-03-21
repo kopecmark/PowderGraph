@@ -102,7 +102,7 @@ LineChart.prototype.updateVis = function () {
     .tickFormat((month) => formatTime(month));
 
   lineVis.yAxis = d3.axisLeft(lineVis.yScale)
-    .ticks(5)
+    .ticks(8)
     .tickFormat((precipAmount) => {
       return precipAmount + "cm";
     });
