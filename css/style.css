@@ -34,9 +34,6 @@ body {
   grid-template-columns: 1fr minmax(min-content, 3fr) 1.5fr;
   height: 100vh;
   margin: 0;
-  font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
-  line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
-  
   }  
   
 header, footer, article, nav, div {
@@ -51,6 +48,8 @@ header, footer, article, nav, div {
   font-weight: 800;
   text-align: center;
   margin: 1vw;
+  font-size: calc(14px + (40 - 14) * ((100vw - 300px) / (1600 - 300)));
+  line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
   }
 
 
@@ -113,6 +112,8 @@ header, footer, article, nav, div {
   border-radius: 26px;
   padding: 15px;
   background: #54A1BF;
+  font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+  line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
 }
 
 /* Stack the layout on small devices/viewports. */
