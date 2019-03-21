@@ -25,7 +25,6 @@
 	top:1px;
 }
 
-
 body { 
   display: grid;
   grid-template-areas: 
@@ -103,11 +102,9 @@ header, footer, article, nav, div {
 
 .site-description { 
   grid-area: desc; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: white;
-  margin-right: 2%;
+  width: 90%;
+  margin: auto;
 } 
 .site-description p {
   border: 4px solid #1C7192;
