@@ -19,6 +19,7 @@ LineChart.prototype.initVis = function () {
   lineVis.height = 500 - lineVis.margin.top - lineVis.margin.bottom;
   lineVis.height = 500 - lineVis.margin.top - lineVis.margin.bottom;
   lineVis.duration = 300;
+  lineVis.t = d3.transition().duration(750);
 
   lineVis.lineOpacity = "0.25";
   lineVis.lineOpacityHover = "0.85";
@@ -106,14 +107,14 @@ LineChart.prototype.updateVis = function () {
       return precipAmount + "cm";
     });
 
-  lineVis.xAxisGroup.call(lineVis.xAxis)
+  lineVis.xAxisGroup.transition(lineVis.t).call(lineVis.xAxis)
     .selectAll("text")
     .attr("y", "10")
     .attr("x", "-5")
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-40)");
 
-  lineVis.yAxisGroup.call(lineVis.yAxis);
+  lineVis.yAxisGroup.transition(lineVis.y).call(lineVis.yAxis);
 
   lineVis.color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -125,9 +126,11 @@ LineChart.prototype.updateVis = function () {
   lineVis.lines = lineVis.svg.append('g')
     .attr('class', 'lines');
 
-  d3.selectAll("path.line").remove();
+  d3.selectAll("path.line").remove()
+    .transition(lineVis.t);
 
-  d3.selectAll("g.circle").remove();
+  d3.selectAll("g.circle").remove()
+    .transition(lineVis.t);
 
   lineVis.lines.selectAll('.line-group')
     .data(lineVis.data).enter()
