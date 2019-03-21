@@ -19,7 +19,6 @@ LineChart.prototype.initVis = function () {
   lineVis.height = 500 - lineVis.margin.top - lineVis.margin.bottom;
   lineVis.height = 500 - lineVis.margin.top - lineVis.margin.bottom;
   lineVis.duration = 300;
-  lineVis.duration = 300;
 
   lineVis.lineOpacity = "0.25";
   lineVis.lineOpacityHover = "0.85";
