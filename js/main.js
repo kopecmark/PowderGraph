@@ -64,7 +64,6 @@ let buttons = document.querySelector(".button-container");
 let rainButton = document.getElementById("rain-button");
 let snowButton = document.getElementById("snow-button");
 let clickedButton;
-switchButtonStyle();
 
 buttons.addEventListener("click", switchData, false);
 
