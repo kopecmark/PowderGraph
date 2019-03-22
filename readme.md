@@ -38,7 +38,7 @@ A user can select a range of years using the range slider to view multiple years
 ![Wireframe](./gifs/rangeSlider.gif)
 
 A user can click the buttons to toggle between snow and rain fall totals
-![Wireframe](./gifs/buttons.gif)
+![Wireframe](./gifs/button.gif)
 
 ### CODE
 #### Data download
