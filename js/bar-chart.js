@@ -115,7 +115,7 @@ BarChart.prototype.updateVis = function(){
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-40)");
 
-  vis.yAxisGroup.transition(vis.y).call(vis.yAxisCall);
+  vis.yAxisGroup.transition(vis.t).call(vis.yAxisCall);
 
   // JOIN new data with old elements
   vis.rect = vis.g.selectAll("rect")
