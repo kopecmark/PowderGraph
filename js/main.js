@@ -58,18 +58,47 @@ d3.csv("data/ll_monthly_snow.csv").then(function (data) {
 
 });
 
-// Function to switch between snow and rain
-let button = document.getElementById("precip-button");
-  
-button.onclick = () => {
-  if (button.innerHTML == "Snow") {
-      button.innerHTML = "Rain";
-  }
-  else {
-    button.innerHTML = "Snow";
-  }
-  flag = !flag;
 
+// Function to switch between snow and rain
+let buttons = document.querySelector(".button-container");
+let rainButton = document.getElementById("rain-button");
+let snowButton = document.getElementById("snow-button");
+let clickedButton;
+switchButtonStyle();
+
+buttons.addEventListener("click", switchData, false);
+
+function switchData(e) {
+  if (e.target !== e.currentTarget) {
+    clickedButton = e.target.id;
+  }
+
+  e.stopPropagation();
+  
+  if (clickedButton === "rain-button" && flag === true) {
+    flag = !flag;
+    switchButtonStyle();
+    updateCharts();
+  } else if(clickedButton === "snow-button" && flag === false) {
+    flag = !flag;
+    switchButtonStyle();
+    updateCharts();
+  }
+}
+
+function switchButtonStyle() {
+  let selected = "#95cce0";
+  let notSelected = "#1c7192";
+  if (flag){
+    snowButton.style.background = selected;
+    rainButton.style.background = notSelected;
+  } else {
+    snowButton.style.background = notSelected;
+    rainButton.style.background = selected;
+  }
+}
+
+function updateCharts() {
   selectedDataBarChart = formattedData.filter((d) => {
     return d.Year === parseInt(slider.noUiSlider.get());
   });
@@ -79,9 +108,8 @@ button.onclick = () => {
   } else {
     lineChart.wrangleData(formattedDataYearly);
   }
-
   barChart.wrangleData(selectedDataBarChart);
-};
+}
 
 
 // Update bar chart using the slider
