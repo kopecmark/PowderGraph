@@ -84,7 +84,7 @@ BarChart.prototype.updateVis = function(){
 
   vis.max = d3.max(vis.data, (month) => {
     return month[vis.value];
-  })
+  });
 
   vis.x.domain(vis.data.map((month) => {
     return month.monthText;
