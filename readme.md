@@ -9,14 +9,21 @@ PowderGraph is a visualization application to show how much snow has fallen mont
 ### Functionality
 
 * The app consists of a single page
-* A user can select a year to view the total amount of snowfall and toggle to rain totals as well.
+* A user can toggle between snow and rain totals using the buttons
+* A user can select a single year using the slider to view the total amount of snowfall or rainfall on the bar graph
+* Using the range slider, a user can view multiple years of snowfall or rainfall totals on the line graph and compare them to a single year against the bar graph
+* Hovering over a each bar in the bar graph will display additional information for each month
+* Hovering on a line in the line graph will display the year that the line represents
+* Hovering over a point on the line graph will display the precipitation total for that month
+
 
 ### Technologies employed
 
-* Vanilla JavaScript for data sorting.
-* D3.js for visualizing the data.
+* Vanilla JavaScript for data sorting and DOM manipulation
+* D3.js for visualizing the data
 * HTML
 * CSS
+* noUiSlider for styling the sliders
 
 ### Data
 * Data was obtained from the Government of Canada Environment and Natural Resources Climate Data Website [LINK](http://climate.weather.gc.ca/index_e.html)
@@ -24,11 +31,14 @@ PowderGraph is a visualization application to show how much snow has fallen mont
 * The data was parsed and statically available on the website
 
 ### Features
-A user can select a year using the slider to view monthly snow fall totals and hover over each bar to view exact values.
-![Wireframe](./slider.gif)
+A user can select a year using the slider to view monthly precipitation totals and hover over each bar to view exact values
+![Wireframe](./gifs/slider.gif)
 
-A user can click the button to toggle between snow and rain fall totals.
-![Wireframe](./button.gif)
+A user can select a range of years using the range slider to view multiple years on the line graph and hover over the line to view the year
+![Wireframe](./gifs/rangeSlider.gif)
+
+A user can click the buttons to toggle between snow and rain fall totals
+![Wireframe](./gifs/buttons.gif)
 
 ### CODE
 #### Data download
