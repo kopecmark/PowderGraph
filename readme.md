@@ -45,6 +45,20 @@ A user can click the buttons to toggle between snow and rain fall totals
 ```
   for year in `seq 2000 2005`;do for month in `seq 1 12`;do wget --content-disposition "http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=2409&Year=${year}&Month=${month}&Day=14&timeframe=3&submit= Download+Data" ;done;done
 ```
+#### Event Propogation
+* Utilized event propagation to eliminate the need to set event listeners for each button
+```
+let buttons = document.querySelector(".button-container");
+buttons.addEventListener("click", switchData, false);
+
+function switchData(e) {
+  if (e.target !== e.currentTarget) {
+    clickedButton = e.target.id;
+  }
+
+  e.stopPropagation();
+}
+```
 
 ### Possible Future Implementations
 * The ability to search all weather stations in Canada and have the application automatically fetch the data so that it can be displayed within the graph.
