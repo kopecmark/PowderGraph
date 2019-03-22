@@ -1,5 +1,5 @@
 button {
-	background-color:#1c7192;
+	/* background-color:#1c7192; */
 	-moz-border-radius:28px;
 	-webkit-border-radius:28px;
 	border-radius:13px;
@@ -16,12 +16,24 @@ button {
   max-width: 70%;
   outline: none;
 }
-button:hover {
-	/* background-color:#3586a3; */
-	background-color:red;
-}
+
 button:active {
   transform: translateY(1px)
+}
+
+[data-selected="true"] {
+  background-color: #95cce0;
+}
+
+[data-selected="true"]:hover {
+	background-color:#aad4e4;
+}
+
+[data-selected="false"] {
+  background-color: #1c7192;
+}
+[data-selected="false"]:hover {
+	background-color:#3586a3;
 }
 
 .button-container{
