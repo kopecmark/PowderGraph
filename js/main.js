@@ -87,14 +87,13 @@ function switchData(e) {
 }
 
 function switchButtonStyle() {
-  let selected = "#95cce0";
-  let notSelected = "#1c7192";
   if (flag){
-    snowButton.style.background = selected;
-    rainButton.style.background = notSelected;
+    snowButton.setAttribute('data-selected', 'true');
+    rainButton.setAttribute('data-selected', 'false');
   } else {
-    snowButton.style.background = notSelected;
-    rainButton.style.background = selected;
+    rainButton.setAttribute('data-selected', 'true');
+    snowButton.setAttribute('data-selected', 'false');
+
   }
 }
 
