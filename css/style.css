@@ -7,11 +7,11 @@ button {
 	cursor:pointer;
 	color: white;
 	font-family:Arial;
-	font-size:17px;
-	padding:16px 31px;
+	font-size: calc(10px + (17 - 10) * ((100vw - 300px) / (1600 - 300)));
+  padding:6% 11%;
 	text-decoration:none;
   text-shadow:0px 1px 0px #1c7192;
-  min-width: 30%;
+  min-width: 10%;
   max-width: 70%;
   outline: none;
 }
@@ -37,7 +37,7 @@ button:active {
 
 .button-container{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 body { 
