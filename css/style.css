@@ -17,7 +17,7 @@ button {
 }
 
 button:active {
-  transform: translateY(1px)
+  transform: translateY(1px);
 }
 
 [data-selected="true"] {
@@ -120,7 +120,9 @@ header, footer, article, nav, div {
   grid-area: desc; 
   color: white;
   width: 90%;
-  margin: auto;
+  display: flex;
+  align-items: center;
+  
 } 
 .site-description p {
   border: 4px solid #1C7192;
